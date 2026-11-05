@@ -21,7 +21,7 @@
 :root{--paper:#fbfaf6;--ink:#111214;--rule:#e9ebf1;--rule2:#d4d7e0;--mute:#4f525b;--blue:#2438c9;--navy:#10206b;--y:#f3c43f;--p:#ff5a9d;--g:#19a974;--b:#2a46d8;--o:#ff6a3d;--m:#c9b6ff;--mint:#bfe6d3;
 --disp:"Bricolage Grotesque","Arial Black",Arial,sans-serif;--body:"Hanken Grotesk",Arial,sans-serif;--hand:"Gaegu","Comic Sans MS",cursive;--mono:"JetBrains Mono",ui-monospace,monospace;--bar:56px}
 *,*::before,*::after{box-sizing:border-box}
-html{height:100%;scroll-padding-top:calc(var(--bar) + 1.6rem)}
+html{height:100%;scroll-padding-top:1rem}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 html.lock{overflow:hidden}
 body{margin:0;color:var(--ink);font:400 1.0625rem/1.65 var(--body);min-height:100%;background:#8c8c8c linear-gradient(#9c9c9c 2px,transparent 2px) 0 0/46px 46px,linear-gradient(90deg,#9c9c9c 2px,transparent 2px) 0 0/46px 46px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -33,7 +33,7 @@ button{font:inherit;color:inherit}
 .skip{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:.7rem 1rem;z-index:100;border:2px solid #000}.skip:focus{left:.5rem;top:.5rem}
 .sheet{width:min(1280px,100% - 1.6rem);margin:.8rem auto;background:var(--paper) repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px);overflow-x:clip;box-shadow:0 0 0 1px #0003,0 20px 60px #0004;position:relative}
 .wrap{width:min(1180px,100% - 2.4rem);margin-inline:auto}
-section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
+section,.project{scroll-margin-top:1rem}
 .note{color:var(--mute);font-size:.92rem}
 .hand{font-family:var(--hand)}
 .txt{background:var(--paper)}
@@ -46,7 +46,7 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 .tape{position:absolute;width:74px;height:24px;background:#efdc8fcc;box-shadow:0 1px 3px #0002;transform:rotate(var(--r,-28deg));z-index:3;pointer-events:none}
 
 /* nav */
-.bar{position:sticky;top:.6rem;z-index:40;margin:.6rem .6rem 0;display:flex;justify-content:space-between;align-items:center;gap:.6rem;background:#fff;border:1.5px solid var(--ink);padding:.3rem .45rem;min-height:var(--bar)}
+.bar{position:relative;z-index:40;margin:.6rem .6rem 0;display:flex;justify-content:space-between;align-items:center;gap:.6rem;background:#fff;border:1.5px solid var(--ink);padding:.3rem .45rem;min-height:var(--bar)}
 .logo{width:30px;height:30px;border-radius:50%;background:var(--p);display:grid;place-items:center;font:800 .95rem var(--disp);color:#fff;text-decoration:none;margin:0 .4rem;flex:none}
 .menu{display:flex;gap:.15rem;align-items:center;flex:1}
 .menu a{text-decoration:none;font:700 .72rem var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:.8rem .9rem;white-space:nowrap}
@@ -84,11 +84,19 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 .t3{font:400 1.2rem var(--hand)!important}
 .open{margin-top:1.8rem;font:500 .78rem var(--mono);letter-spacing:.05em;text-transform:uppercase}
 .open i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--b);margin-right:.5rem}
-.tag{font:600 clamp(1.5rem,3.4vw,2.6rem)/1.15 var(--body);letter-spacing:-.025em;max-width:24ch;margin:1.6rem auto 0}
+.tag{font:600 clamp(1.3rem,2.7vw,2.1rem)/1.3 var(--body);letter-spacing:-.02em;max-width:26ch;margin:1.6rem auto 0;text-wrap:balance}
+.tag .hl{position:relative;white-space:nowrap;padding:0 .22em;margin:0 -.06em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath fill='%23f3c43f' d='M3 9C20 3 45 7 70 5s55 2 80 0 38 3 47 6c-2 6 2 9-1 14 3 5-1 8 1 11-22 3-45-1-68 1s-52 3-77 0S25 37 5 35c3-6-2-9 1-14C3 17 5 13 3 9Z'/%3E%3C/svg%3E") center 58%/100% .95em no-repeat}
+@media(min-width:700px){.tag{max-width:none}.tag .ln{display:block}}
+/* sticker hover: springy tilt via the separate rotate/translate properties, so each sticker keeps its own --r angle */
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+ .stks .stk{transition:rotate .5s cubic-bezier(.34,1.9,.5,1),translate .3s ease-out}
+ .stks .stk:hover{rotate:4deg;translate:0 -3px}
+ .stks li:nth-child(even) .stk:hover{rotate:-4deg}
+}
 .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;margin-top:1.7rem}
-.bk{display:inline-flex;gap:.7rem;align-items:center;background:var(--ink);color:#fff;text-decoration:none;font:700 .78rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.95rem 1.4rem;border:1.5px solid var(--ink);cursor:pointer;min-height:46px;transition:transform .2s,box-shadow .2s}
+.bk{display:inline-flex;justify-content:center;text-align:center;align-items:center;background:var(--ink);color:#fff;text-decoration:none;font:700 .78rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.95rem 1.4rem;border:1.5px solid var(--ink);cursor:pointer;min-height:46px;transition:transform .2s,box-shadow .2s}
+.bk{gap:.55rem}.bk .bi{flex:none;display:block}.bk:not(.alt) .bi{background:#fff;border-radius:4px;padding:2px;width:23px;height:23px;box-sizing:border-box}
 .bk:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--b)}
-.bk i{width:14px;height:14px;background:var(--b)}
 .bk.alt{background:#fff;color:var(--ink)}
 .bk[disabled]{opacity:.6;cursor:progress;transform:none;box-shadow:none}
 @media(max-width:860px){
@@ -132,6 +140,7 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 .slider.ml.mr .track{-webkit-mask-image:linear-gradient(90deg,transparent,#000 1.4rem,#000 calc(100% - 2.2rem),transparent);mask-image:linear-gradient(90deg,transparent,#000 1.4rem,#000 calc(100% - 2.2rem),transparent)}
 .slider.ml:not(.mr) .track{-webkit-mask-image:linear-gradient(90deg,transparent,#000 1.4rem);mask-image:linear-gradient(90deg,transparent,#000 1.4rem)}
 .it{flex:0 0 calc((100% - (var(--c) - 1)*var(--g))/var(--c));scroll-snap-align:start;min-width:0}
+.slider.top .track{align-items:flex-start}
 .fg{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
 .fg img{display:block;width:100%;height:auto;margin-inline:auto;box-shadow:0 14px 28px -14px #0007;background:#fff}
 .it.empty{aspect-ratio:4/5;display:grid;place-items:center;text-align:center;padding:1rem;border:2px dashed var(--navy);background:repeating-linear-gradient(45deg,#e7e9f7 0 10px,#dfe2f3 10px 20px);font:600 .92rem/1.4 var(--body);color:var(--navy)}
@@ -146,6 +155,35 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 @media(max-width:860px){.track{--c:var(--nt,1)}}
 @media(max-width:600px){.track{--c:var(--nm,1)}.nb.l{left:-6px}.nb.r{right:-6px}}
 @media(prefers-reduced-motion:reduce){.track{scroll-snap-type:none}}
+
+
+/* framed gallery items: same outer frame for mixed square/portrait artwork */
+.fg.fr{aspect-ratio:var(--fr);background:#fff;overflow:hidden;box-shadow:0 14px 28px -14px #0007}
+.fg.fr img{height:100%;object-fit:contain;box-shadow:none;max-width:none!important}
+.cgrid .fg.fr{box-shadow:0 12px 24px -12px #0006}
+/* automatic movement: loop dissolve, pause control, drag */
+.track{transition:opacity .35s ease}.track.lp{opacity:0}
+.track.dg{scroll-snap-type:none;cursor:grabbing;user-select:none;-webkit-user-select:none}
+.track.dg .fg,.track.dg .rv{cursor:grabbing}
+.pp{flex:none;width:32px;height:32px;border:2px solid var(--ink);background:#fff;padding:0;cursor:pointer;display:grid;place-items:center;transition:background .15s,transform .15s}
+.pp::before{content:"";display:block}
+.pp[data-s=pause]::before{width:10px;height:12px;border:solid var(--ink);border-width:0 3px}
+.pp[data-s=play]::before{border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent var(--ink);margin-left:3px}
+.pp:hover{background:var(--y)}.pp:focus-visible{outline:3px solid var(--b);outline-offset:3px}
+.sinfo{min-height:34px}
+@media(prefers-reduced-motion:reduce){.pp{display:none}.track{transition:none}}
+/* hover and keyboard feedback (transform only, so layout never shifts) */
+.fg,.rv,.nb{-webkit-tap-highlight-color:transparent}
+.fg img,.fg.fr{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.fg:focus-visible{outline:3px solid var(--b);outline-offset:4px}
+.nb:focus-visible{outline:3px solid var(--b);outline-offset:3px}
+.rv{transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}.rv .play{transition:transform .2s,opacity .2s}
+@media(hover:hover){
+ .fg:hover img:not(.x){transform:translateY(-4px)}.fg.fr:hover img{transform:none}.fg.fr:hover{transform:translateY(-4px)}
+ .rv:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}.rv:hover .play,.rv:focus-visible .play{transform:scale(1.1)}
+ .nb:not(:disabled):active,.pp:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}}
+.rv:focus-visible{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+@media(prefers-reduced-motion:reduce){.fg img,.fg.fr,.rv,.rv .play{transition:none}.fg:hover img,.fg.fr:hover,.rv:hover,.rv:focus-visible{transform:none!important}}
 
 /* reels */
 .reels{padding:3.5rem 0 3rem;text-align:center;border-top:1px solid var(--rule2)}
@@ -166,10 +204,15 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 .xh{margin:2rem 0 0}
 .xl{border-top:2px solid var(--ink);margin-top:1.2rem}
 .xr{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) auto;gap:1.2rem;align-items:center;padding:1.3rem 0;border-bottom:1px solid var(--ink);background:var(--paper)}
-.xr h3{font-size:clamp(1.7rem,4vw,3.1rem);font-weight:800;overflow-wrap:anywhere}.xr p{color:var(--mute)}
+.xr h3{font-size:clamp(1.7rem,4vw,3.1rem);font-weight:800;overflow-wrap:anywhere}.xr p{color:var(--mute)}/* job rows: one shared 3-column grid (name | role + place | date) so the middle column starts at the same x in every row */
+.xr.job{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) 10.5rem;align-items:center}
+.xr.job .xm{display:grid;gap:.3rem;align-content:center;min-width:0}
+.xr.job .xm p{margin:0}.xr.job .xrole{color:var(--ink);font-weight:600;line-height:1.25}
+.xr.job .xloc{font-size:.84rem;line-height:1.3;color:var(--mute)}
+.xr.job .stk{justify-self:end}
 .exp .chips{justify-content:flex-start;margin-top:1.2rem}
 .exp h2{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800}
-@media(max-width:760px){.xr{grid-template-columns:1fr;gap:.5rem;justify-items:start}}
+@media(max-width:760px){.xr,.xr.job{grid-template-columns:minmax(0,1fr);gap:.5rem;justify-items:start}.xr.job .stk{justify-self:start;margin-top:.2rem}}
 
 /* services */
 .sv-sec{padding:4.5rem 0 3.5rem;text-align:center;border-top:1px solid var(--rule2)}
@@ -190,6 +233,7 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 @media(max-width:900px){.svg-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.svg-grid{grid-template-columns:1fr}}
 
 /* testimonials */
+.tm[hidden]{display:none!important}
 .tm{padding:4rem 0 3rem;text-align:center;border-top:1px solid var(--rule2)}.tm h2{font-size:clamp(2.4rem,6vw,4.8rem);font-weight:800;margin:1rem 0 2.2rem}
 .tgrid{display:grid;grid-template-columns:repeat(var(--tn,3),minmax(0,1fr));gap:1.6rem;text-align:left}
 .tc{position:relative;background:var(--paper);border:2px dashed var(--ink);padding:1.6rem 1.4rem}
@@ -204,15 +248,12 @@ section{scroll-margin-top:calc(var(--bar) + 1.6rem)}
 .ct h2{font-size:clamp(2.6rem,8.5vw,7rem);font-weight:800;text-align:center}
 .ct h2 span{font-family:var(--hand);font-weight:700;letter-spacing:0;color:var(--b)}
 .avail{display:block;width:max-content;max-width:100%;margin:1.8rem auto 2.4rem;text-decoration:none;--c:var(--g);font:700 .78rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#fff}
-.cg{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:3rem;align-items:start}
-.mail{font:700 clamp(1.25rem,3vw,2.2rem) var(--disp);letter-spacing:-.03em;overflow-wrap:anywhere;text-decoration-thickness:3px;text-underline-offset:.2em;text-decoration-color:var(--b)}
-.links{margin-top:1.6rem;display:grid;gap:.6rem;font-size:1.1rem}
-.card{background:#fff;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:1.5rem;position:relative}
-form{display:grid;gap:1rem}label{display:grid;gap:.3rem;font:600 .78rem var(--mono);text-transform:uppercase;letter-spacing:.04em}
-input,select,textarea{font:400 1rem var(--body);text-transform:none;letter-spacing:0;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);padding:.8rem 1rem;width:100%;border-radius:0}
-textarea{min-height:130px;resize:vertical}
-#fstatus{min-height:1.5em}#fstatus.err{color:#b3261e}#fstatus.ok{color:#0b6b46}
-@media(max-width:860px){.cg{grid-template-columns:1fr}}
+.cb{display:grid;justify-items:center;gap:1.6rem;text-align:center}
+.mail{margin:0;font:700 clamp(1.25rem,4.2vw,2.6rem) var(--disp);letter-spacing:-.03em;overflow-wrap:anywhere;user-select:all;-webkit-user-select:all;border-bottom:3px solid var(--b);padding-bottom:.15em}
+.cacts{display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;width:100%}
+.cacts .bk{min-width:9.5rem;justify-content:center}
+.cs-note{margin:0;min-height:1.5em;color:#0b6b46;font-weight:600}
+@media(max-width:520px){.cacts{display:grid;grid-template-columns:1fr}.cacts .bk{width:100%}}
 footer{border-top:1.5px solid var(--ink);background:#fff;padding:1.5rem 0;font-size:.95rem}
 footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}footer a{text-decoration:none;margin-right:1.2rem;font:700 .72rem var(--mono);text-transform:uppercase}
 
@@ -247,6 +288,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .mo-only{display:none}
 @media(max-width:700px){.dk-only{display:none}.mo-only{display:block}.pcols{grid-template-columns:1fr}.cgrid.m1{grid-template-columns:1fr}}
 .bsub{margin-top:clamp(2.4rem,5vw,3.6rem)}
+.bhd{margin:-.5rem 0 1rem;max-width:56ch;font:500 .95rem/1.5 var(--body);color:var(--mute)}
+/* Instagram-style frame (decorative, never intercepts clicks) */
+.igc{container-type:inline-size;width:100%}
+.igw{position:relative;padding-block:max(2.6rem,5.2cqw);--rad:max(1rem,3.2cqw)}
+.igw .fg{display:block;width:100%}
+.igf{position:absolute;inset:0 auto 0 33.3333%;width:33.3334%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;color:var(--ink);
+ border:1.5px solid var(--ink);border-radius:var(--rad);box-shadow:0 0 0 1.5px rgba(255,255,255,.9),inset 0 0 0 1.5px rgba(255,255,255,.55);font-size:max(.72rem,1.1cqw)}
+.igh,.igb{display:flex;align-items:center;gap:.7em;height:max(2.6rem,5.2cqw);padding-inline:calc(var(--rad)*.7)}
+.igav{display:grid;place-items:center;flex:none;width:2.3em;height:2.3em;border-radius:50%;border:1.5px solid var(--ink);background:var(--paper);font:800 1em var(--disp)}
+.ign{flex:1;font:700 1.12em var(--body);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.igh svg{height:1.5em;width:auto}.igb svg{height:2em;width:2em}.igb i{flex:1}
+@container (max-width:559px){.igf{display:none}.igw{padding-block:0}}
 .bh{margin:0 0 1rem;padding-top:1.2rem;border-top:1px solid var(--rule2);font:700 .8rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .camps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.6rem,3.5vw,3rem);align-items:start}
 .camp{min-width:0}.camp h5{margin:0;font:800 clamp(1.4rem,2.4vw,1.9rem)/1.1 var(--disp);letter-spacing:-.02em}
@@ -312,7 +365,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .dkth button{flex:none;padding:0;border:2px solid transparent;background:#222;cursor:pointer;opacity:.65}.dkth button img{display:block;height:64px;width:auto;aspect-ratio:2576/1449}
 .dkth button[aria-current=true]{border-color:#fff;opacity:1}.dkth button:focus-visible{outline:3px solid #7aa2ff;outline-offset:2px}
 @media(max-width:600px){.dkimg{margin:0 .4rem}.dkth button img{height:48px}#dk .nb.l{left:.2rem}#dk .nb.r{right:.2rem}#dk .nb{top:auto;bottom:.8rem;opacity:.92}}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 input[aria-invalid=true],textarea[aria-invalid=true]{border-color:#b3261e;box-shadow:0 0 0 2px #b3261e33}
 /* dialogs */
 dialog{color:var(--ink);padding:0}
@@ -382,12 +434,12 @@ dialog::backdrop{background:#0a0b10c4}
       <li><span class="stk mono t1" style="--r:-4deg">Brands and social</span></li>
       <li><span class="stk mono t2" style="--r:3deg">Thoughtfully made</span></li>
       <li><span class="stk t3" style="--r:-3deg">Graphic designer</span></li>
-      <li><span class="stk mono t4" style="--r:2deg">3+ Years of Experience</span></li>
+      <li><span class="stk mono t4" style="--r:2deg">4 Years of Experience</span></li>
     </ul>
   </div>
   <p class="open"><i></i>Open to new work and good briefs</p>
-  <p class="tag">I create social media campaigns, product visuals, presentations and motion content for brands.</p>
-  <div class="acts"><a class="bk" href="#work"><i></i>View selected work</a><a class="bk alt" href="#contact">Contact</a></div>
+  <p class="tag"><span class="ln">I design <span class="hl">social media</span> campaigns,</span> <span class="ln">product visuals and motion content.</span></p>
+  <div class="acts"><a class="bk" href="#work">View selected work</a><a class="bk alt" href="#contact">Contact</a></div>
 </div></section>
 
 <section class="about" id="about" aria-labelledby="about-h"><div class="wrap">
@@ -416,9 +468,9 @@ dialog::backdrop{background:#0a0b10c4}
 <section class="exp" id="experience" aria-labelledby="exp-h"><div class="wrap">
   <h2 id="exp-h" class="lbl" style="font-family:var(--hand);letter-spacing:0">where I've worked</h2>
   <div class="xl">
-    <div class="xr"><h3>Deluxe Digital Solutions</h3><p>Graphic Designer</p><span class="stk mono" style="--c:var(--g);color:#fff;--r:-2deg">2025 to present</span></div>
-    <div class="xr"><h3>Samarix</h3><p>Graphic Designer</p><span class="stk mono" style="--c:var(--y);--r:2deg">2022 to 2023</span></div>
-    <div class="xr"><h3>Mixeal</h3><p>Graphic Designer</p><span class="stk mono" style="--c:var(--p);--r:-1deg">2022 to 2023</span></div>
+    <div class="xr job"><h3>Deluxe Digital Solutions</h3><div class="xm"><p class="xrole">Graphic Designer &amp; Video Editor</p><p class="xloc">Cyprus · Remote</p></div><span class="stk mono" style="--c:var(--g);color:#fff;--r:-2deg">2025 to present</span></div>
+    <div class="xr job"><h3>Samarix</h3><div class="xm"><p class="xrole">Graphic Designer</p><p class="xloc">Pakistan · On-site</p></div><span class="stk mono" style="--c:var(--y);--r:2deg">2022 to 2023</span></div>
+    <div class="xr job"><h3>Mixeal</h3><div class="xm"><p class="xrole">Graphic Designer &amp; Video Editor</p><p class="xloc">Pakistan · Hybrid</p></div><span class="stk mono" style="--c:var(--p);--r:-1deg">2022 to 2023</span></div>
   </div>
   <div class="xh"><h3 class="lbl" style="font-family:var(--hand);letter-spacing:0;font-weight:400">education</h3>
   <div class="xl"><div class="xr"><h3>University of Sindh</h3><p>Bachelor's in Communication Design</p><span class="stk mono" style="--c:var(--m);--r:2deg">2021 to 2024</span></div></div></div>
@@ -431,7 +483,8 @@ dialog::backdrop{background:#0a0b10c4}
   <div class="tools"><h3 class="lbl" style="font-family:var(--hand);letter-spacing:0;font-weight:400">tools I use</h3><ul class="tl" id="tl"></ul></div>
 </div></section>
 
-<section class="tm" id="testimonials" aria-labelledby="tm-h"><div class="wrap">
+<!-- Testimonials are hidden for now: delete the hidden attribute below to show the section again. The content stays editable in TESTIMONIALS. -->
+<section class="tm" id="testimonials" aria-labelledby="tm-h" hidden><div class="wrap">
   <span class="lbl">kind words</span><h2 id="tm-h">What clients say.</h2>
   <ul class="tgrid" id="tm"></ul>
 </div></section>
@@ -439,23 +492,15 @@ dialog::backdrop{background:#0a0b10c4}
 <section class="ct" id="contact" aria-labelledby="ct-h"><div class="wrap">
   <h2 id="ct-h">Let's make something <span>together.</span></h2>
   <a class="stk avail" href="mailto:sobhazadm@gmail.com">Available for work</a>
-  <div class="cg">
-    <div>
-      <a class="mail" href="mailto:sobhazadm@gmail.com">sobhazadm@gmail.com</a>
-      <ul class="links"><li><a href="https://www.behance.net/gallery/252962099/Graphic-Design-Portfolio" target="_blank" rel="noopener">Behance portfolio</a></li><li><a href="https://www.linkedin.com/in/sobh-mangi-4a53a5403/" target="_blank" rel="noopener">LinkedIn</a></li></ul>
+  <div class="cb">
+    <p class="mail" id="mailtxt">sobhazadm@gmail.com</p>
+    <div class="cacts">
+      <a class="bk" id="emailme" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sobhazadm%40gmail.com" target="_blank" rel="noopener noreferrer"><svg class="bi" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M2 6.5v11A1.5 1.5 0 0 0 3.5 19H6V9.9l6 4.5 6-4.5V19h2.5a1.5 1.5 0 0 0 1.5-1.5v-11c0-1.86-2.12-2.92-3.6-1.8L12 9.6 5.6 4.7C4.12 3.58 2 4.64 2 6.5Z"/><path fill="#34A853" d="M18 9.9V19h2.5a1.5 1.5 0 0 0 1.5-1.5v-11L18 9.9Z"/><path fill="#4285F4" d="M2 6.5v11A1.5 1.5 0 0 0 3.5 19H6V9.9L2 6.5Z"/><path fill="#FBBC04" d="M18 5.2v4.7l4-3.4c0-1.86-2.12-2.92-3.6-1.8L18 5.2Z"/></svg><span>Email me</span></a>
+      <button class="bk alt" type="button" id="copymail"><svg class="bi" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><rect x="8.5" y="8.5" width="11" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 5.5v-.5a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 5v10A1.5 1.5 0 0 0 6 16.5h.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Copy email</span></button>
+      <a class="bk alt" href="https://www.linkedin.com/in/sobh-mangi-4a53a5403/" target="_blank" rel="noopener"><svg class="bi" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/><path fill="#fff" d="M6.2 9.6h2.5V18H6.2V9.6ZM7.45 5.6a1.45 1.45 0 1 1 0 2.9 1.45 1.45 0 0 1 0-2.9ZM10.3 9.6h2.4v1.15h.04c.33-.63 1.15-1.3 2.36-1.3 2.52 0 2.99 1.66 2.99 3.82V18h-2.5v-4.2c0-1-.02-2.28-1.4-2.28-1.4 0-1.6 1.09-1.6 2.2V18h-2.5V9.6Z"/></svg><span>LinkedIn</span></a>
+      <a class="bk alt" href="https://www.behance.net/gallery/252962099/Graphic-Design-Portfolio" target="_blank" rel="noopener"><svg class="bi" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="4" fill="#1769FF"/><path fill="#fff" d="M5 7.6h3.6c1.5 0 2.4.7 2.4 1.9 0 .8-.4 1.4-1.1 1.7.9.3 1.5 1 1.5 2 0 1.4-1 2.3-2.7 2.3H5V7.6Zm1.5 1.2v1.9h1.8c.6 0 1-.3 1-.95 0-.6-.4-.95-1-.95H6.5Zm0 3.1v2.2h2c.7 0 1.1-.4 1.1-1.1s-.4-1.1-1.1-1.1h-2Z"/><path fill="#fff" d="M13 8.4h3.5v.9H13zM16 10.5c1.5 0 2.5 1 2.5 2.6v.5h-3.6c.1.8.6 1.2 1.3 1.2.5 0 .9-.2 1.1-.6h1.2c-.3 1-1.2 1.7-2.4 1.7-1.5 0-2.5-1.1-2.5-2.7s1-2.7 2.4-2.7Zm-1.2 2.1h2.3c-.1-.7-.5-1.1-1.1-1.1-.6 0-1.1.4-1.2 1.1Z"/></svg><span>Behance</span></a>
     </div>
-    <div class="card"><span class="tape" style="right:18px;top:-12px;--r:6deg"></span>
-      <form id="form" method="post" novalidate>
-        <div class="hp" aria-hidden="true"><label>Leave this field empty<input name="_honey" tabindex="-1" autocomplete="off"></label></div>
-        <input type="hidden" name="_subject" value="New enquiry from Sobh’s Portfolio"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_template" value="table">
-        <label>Name<input name="name" required autocomplete="name" maxlength="100"></label>
-        <label>Email<input name="email" type="email" required autocomplete="email" maxlength="150"></label>
-        <label>Project type<select name="type"><option>Logo design</option><option>Social media design</option><option>Campaign or advertising</option><option>Motion graphics</option><option>UI/UX</option><option>Presentation design</option><option>Something else</option></select></label>
-        <label>About the project<textarea name="message" required minlength="10" maxlength="3000"></textarea></label>
-        <button class="bk" type="submit" id="fbtn"><i></i><span>Send inquiry</span></button>
-        <p class="note" id="fstatus" role="status" aria-live="polite"></p>
-      </form>
-    </div>
+    <p class="note cs-note" id="copied" role="status" aria-live="polite"></p>
   </div>
 </div></section>
 </main>
@@ -477,15 +522,12 @@ dialog::backdrop{background:#0a0b10c4}
 
 <script>
 /* ===================== EDIT HERE: all content ===================== */
-const IMG={"lv1":"assets/img/lv1.jpg","lv2":"assets/img/lv2.jpg","lv3":"assets/img/lv3.jpg","lv4":"assets/img/lv4.jpg","lv5":"assets/img/lv5.jpg","lv6":"assets/img/lv6.jpg","lv7":"assets/img/lv7.jpg","lv8":"assets/img/lv8.jpg","ada4":"assets/img/ada4.jpg","ada5":"assets/img/ada5.jpg","ada6":"assets/img/ada6.jpg","bc4":"assets/img/bc4.jpg","bc5":"assets/img/bc5.jpg","bc6":"assets/img/bc6.jpg","dash4":"assets/img/dash4.jpg","dash5":"assets/img/dash5.jpg","dash6":"assets/img/dash6.jpg","dx4":"assets/img/dx4.jpg","dx5":"assets/img/dx5.jpg","dx6":"assets/img/dx6.jpg","mv4":"assets/img/mv4.jpg","mv5":"assets/img/mv5.jpg","mv6":"assets/img/mv6.jpg","tk4":"assets/img/tk4.jpg","tk5":"assets/img/tk5.jpg","tk6":"assets/img/tk6.jpg","sk_p1":"assets/img/sk_p1.jpg","sk_p2":"assets/img/sk_p2.jpg","sk_p3":"assets/img/sk_p3.jpg","sk_p4":"assets/img/sk_p4.jpg","sk_p5":"assets/img/sk_p5.jpg","sk_p6":"assets/img/sk_p6.jpg","sk_p7":"assets/img/sk_p7.jpg","sk_p8":"assets/img/sk_p8.jpg","sk_p9":"assets/img/sk_p9.jpg","sk_p10":"assets/img/sk_p10.jpg","sk_p11":"assets/img/sk_p11.jpg","sk_s1":"assets/img/sk_s1.jpg","sk_s2":"assets/img/sk_s2.jpg","sk_s3":"assets/img/sk_s3.jpg","sk_s4":"assets/img/sk_s4.jpg","sk_s5":"assets/img/sk_s5.jpg","sk_s6":"assets/img/sk_s6.jpg","sk_s7":"assets/img/sk_s7.jpg","ai":"assets/img/ai.png","ps":"assets/img/ps.png","ae":"assets/img/ae.png","fg":"assets/img/fg.png","cv":"assets/img/cv.png","t6":"assets/img/t6.png","t7":"assets/img/t7.png","ada1":"assets/img/ada1.jpg","ada2":"assets/img/ada2.jpg","ada3":"assets/img/ada3.jpg","bc1":"assets/img/bc1.jpg","bc2":"assets/img/bc2.jpg","bc3":"assets/img/bc3.jpg","dash1":"assets/img/dash1.jpg","dash2":"assets/img/dash2.jpg","dash3":"assets/img/dash3.jpg","dx1":"assets/img/dx1.jpg","dx2":"assets/img/dx2.jpg","dx3":"assets/img/dx3.jpg","grasp":"assets/img/grasp.jpg","medic":"assets/img/medic.jpg","mixeal":"assets/img/mixeal.jpg","mv1":"assets/img/mv1.jpg","mv2":"assets/img/mv2.jpg","mv3":"assets/img/mv3.jpg","portrait":"assets/img/portrait.jpg","tk1":"assets/img/tk1.jpg","tk2":"assets/img/tk2.jpg","tk3":"assets/img/tk3.jpg","bg1":"assets/img/bg1.webp","bg1p1":"assets/img/bg1p1.webp","bg1p2":"assets/img/bg1p2.webp","bg1p3":"assets/img/bg1p3.webp","bg2":"assets/img/bg2.webp","bg2p1":"assets/img/bg2p1.webp","bg2p2":"assets/img/bg2p2.webp","bg2p3":"assets/img/bg2p3.webp","bg3":"assets/img/bg3.webp","bg3p1":"assets/img/bg3p1.webp","bg3p2":"assets/img/bg3p2.webp","bg3p3":"assets/img/bg3p3.webp","bg4":"assets/img/bg4.webp","bg4p1":"assets/img/bg4p1.webp","bg4p2":"assets/img/bg4p2.webp","bg4p3":"assets/img/bg4p3.webp","bg5":"assets/img/bg5.webp","bg5p1":"assets/img/bg5p1.webp","bg5p2":"assets/img/bg5p2.webp","bg5p3":"assets/img/bg5p3.webp","bg6":"assets/img/bg6.webp","bg6p1":"assets/img/bg6p1.webp","bg6p2":"assets/img/bg6p2.webp","bg6p3":"assets/img/bg6p3.webp","bg7":"assets/img/bg7.webp","bg7p1":"assets/img/bg7p1.webp","bg7p2":"assets/img/bg7p2.webp","bg7p3":"assets/img/bg7p3.webp","bg8":"assets/img/bg8.webp","bg8p1":"assets/img/bg8p1.webp","bg8p2":"assets/img/bg8p2.webp","bg8p3":"assets/img/bg8p3.webp","ba1":"assets/img/ba1.webp","ba2":"assets/img/ba2.webp","ba3":"assets/img/ba3.webp","ba4":"assets/img/ba4.webp","ba5":"assets/img/ba5.webp","ba6":"assets/img/ba6.webp","ba7":"assets/img/ba7.webp","ba8":"assets/img/ba8.webp","bg9":"assets/img/bg9.webp","ex1":"assets/img/ex1.webp","ex2":"assets/img/ex2.webp","ex3":"assets/img/ex3.webp","ex4":"assets/img/ex4.webp","bs1":"assets/img/bs1.webp","bs2":"assets/img/bs2.webp","bs3":"assets/img/bs3.webp","bs4":"assets/img/bs4.webp","bs5":"assets/img/bs5.webp","pa1":"assets/img/pa1.webp","pa2":"assets/img/pa2.webp","pa3":"assets/img/pa3.webp","pa4":"assets/img/pa4.webp","lf1":"assets/img/lf1.png","lf2":"assets/img/lf2.png","lf3":"assets/img/lf3.png","lf4":"assets/img/lf4.png","lf5":"assets/img/lf5.png","lf6":"assets/img/lf6.png","lf7":"assets/img/lf7.png","lf5m":"assets/img/lf5m.png","lf6m":"assets/img/lf6m.png","lf8":"assets/img/lf8.png","lf9":"assets/img/lf9.png","tkn1":"assets/img/tkn1.jpg","tkn2":"assets/img/tkn2.jpg","tkn3":"assets/img/tkn3.jpg","tkn4":"assets/img/tkn4.jpg","tkn5":"assets/img/tkn5.jpg","tkn6":"assets/img/tkn6.jpg","tkn7":"assets/img/tkn7.jpg","tkn8":"assets/img/tkn8.jpg","tkn9":"assets/img/tkn9.jpg","bcg1":"assets/img/bcg1.webp","bcg2":"assets/img/bcg2.webp","bcg3":"assets/img/bcg3.webp","bcg4":"assets/img/bcg4.webp","bcg5":"assets/img/bcg5.webp","bcg6":"assets/img/bcg6.webp","adn1":"assets/img/adn1.jpg","adn2":"assets/img/adn2.jpg","adn3":"assets/img/adn3.jpg","adn4":"assets/img/adn4.jpg","adn5":"assets/img/adn5.jpg","adn6":"assets/img/adn6.jpg","adn7":"assets/img/adn7.jpg","adn8":"assets/img/adn8.jpg","adn9":"assets/img/adn9.jpg","adn10":"assets/img/adn10.jpg","adn11":"assets/img/adn11.jpg","md1":"assets/img/md1.webp","mdt1":"assets/img/mdt1.jpg","md2":"assets/img/md2.webp","mdt2":"assets/img/mdt2.jpg","md3":"assets/img/md3.webp","mdt3":"assets/img/mdt3.jpg","md4":"assets/img/md4.webp","mdt4":"assets/img/mdt4.jpg","md5":"assets/img/md5.webp","mdt5":"assets/img/mdt5.jpg","md6":"assets/img/md6.webp","mdt6":"assets/img/mdt6.jpg","md7":"assets/img/md7.webp","mdt7":"assets/img/mdt7.jpg","md8":"assets/img/md8.webp","mdt8":"assets/img/mdt8.jpg","md9":"assets/img/md9.webp","mdt9":"assets/img/mdt9.jpg","gx1":"assets/img/gx1.webp","gxt1":"assets/img/gxt1.jpg","gx2":"assets/img/gx2.webp","gxt2":"assets/img/gxt2.jpg","gx3":"assets/img/gx3.webp","gxt3":"assets/img/gxt3.jpg","gx4":"assets/img/gx4.webp","gxt4":"assets/img/gxt4.jpg","gx5":"assets/img/gx5.webp","gxt5":"assets/img/gxt5.jpg","gx6":"assets/img/gx6.webp","gxt6":"assets/img/gxt6.jpg","gx7":"assets/img/gx7.webp","gxt7":"assets/img/gxt7.jpg","gx8":"assets/img/gx8.webp","gxt8":"assets/img/gxt8.jpg","gx9":"assets/img/gx9.webp","gxt9":"assets/img/gxt9.jpg","gx10":"assets/img/gx10.webp","gxt10":"assets/img/gxt10.jpg","gx11":"assets/img/gx11.webp","gxt11":"assets/img/gxt11.jpg","gx12":"assets/img/gx12.webp","gxt12":"assets/img/gxt12.jpg","gx13":"assets/img/gx13.webp","gxt13":"assets/img/gxt13.jpg","tl_chatgpt":"assets/img/tl_chatgpt.svg","tl_claude":"assets/img/tl_claude.svg","tl_gemini":"assets/img/tl_gemini.svg"};
-const DIM={"lv1":[600,750],"lv2":[600,750],"lv3":[600,750],"lv4":[600,750],"lv5":[600,750],"lv6":[600,750],"lv7":[600,750],"lv8":[600,750],"ada4":[454,582],"ada5":[475,775],"ada6":[455,582],"bc4":[410,726],"bc5":[408,726],"bc6":[410,726],"dash4":[500,630],"dash5":[505,620],"dash6":[495,635],"dx4":[487,590],"dx5":[480,590],"dx6":[477,590],"mv4":[435,540],"mv5":[425,540],"mv6":[430,540],"tk4":[470,600],"tk5":[472,600],"tk6":[470,600],"sk_p1":[600,750],"sk_p2":[600,750],"sk_p3":[600,750],"sk_p4":[600,750],"sk_p5":[600,750],"sk_p6":[600,750],"sk_p7":[600,750],"sk_p8":[600,750],"sk_p9":[600,750],"sk_p10":[600,750],"sk_p11":[600,750],"sk_s1":[504,896],"sk_s2":[504,896],"sk_s3":[504,896],"sk_s4":[504,896],"sk_s5":[504,896],"sk_s6":[504,896],"sk_s7":[504,896],"ai":[96,96],"ps":[96,96],"ae":[96,96],"fg":[96,96],"cv":[96,96],"t6":[96,96],"t7":[96,96],"ada1":[496,623],"ada2":[489,623],"ada3":[493,623],"bc1":[419,741],"bc2":[408,741],"bc3":[408,741],"dash1":[520,513],"dash2":[520,513],"dash3":[520,505],"dx1":[483,609],"dx2":[490,609],"dx3":[487,609],"grasp":[900,390],"medic":[900,625],"mixeal":[900,503],"mv1":[428,544],"mv2":[428,544],"mv3":[431,544],"portrait":[460,493],"tk1":[465,585],"tk2":[483,585],"tk3":[483,585],"bg1":[1400,622],"bg1p1":[627,836],"bg1p2":[627,836],"bg1p3":[627,836],"bg2":[1400,622],"bg2p1":[627,836],"bg2p2":[627,836],"bg2p3":[627,836],"bg3":[1400,622],"bg3p1":[627,836],"bg3p2":[628,836],"bg3p3":[627,836],"bg4":[1400,622],"bg4p1":[627,836],"bg4p2":[627,836],"bg4p3":[627,836],"bg5":[1400,622],"bg5p1":[627,836],"bg5p2":[627,836],"bg5p3":[627,836],"bg6":[1400,622],"bg6p1":[627,836],"bg6p2":[628,836],"bg6p3":[627,836],"bg7":[1400,622],"bg7p1":[627,836],"bg7p2":[627,836],"bg7p3":[627,836],"bg8":[1400,622],"bg8p1":[627,836],"bg8p2":[628,836],"bg8p3":[627,836],"ba1":[1400,600],"ba2":[1400,600],"ba3":[1400,600],"ba4":[1400,600],"ba5":[1400,600],"ba6":[1400,600],"ba7":[1400,600],"ba8":[1400,600],"bg9":[1400,600],"ex1":[1080,1350],"ex2":[1080,1350],"ex3":[1080,1350],"ex4":[1080,1350],"bs1":[1080,1350],"bs2":[1080,1350],"bs3":[1080,1350],"bs4":[1080,1350],"bs5":[1080,1350],"pa1":[1080,1350],"pa2":[1080,1350],"pa3":[1080,1350],"pa4":[1080,1350],"lf1":[118,70],"lf2":[460,99],"lf3":[365,109],"lf4":[234,153],"lf5":[303,114],"lf6":[395,105],"lf7":[1391,610],"lf5m":[303,114],"lf6m":[395,105],"lf8":[420,206],"lf9":[310,92],"tkn1":[1080,1350],"tkn2":[1080,1350],"tkn3":[1080,1350],"tkn4":[1080,1350],"tkn5":[1080,1350],"tkn6":[1080,1350],"tkn7":[1080,1350],"tkn8":[1080,1350],"tkn9":[1080,1350],"bcg1":[1400,622],"bcg2":[1400,622],"bcg3":[1400,622],"bcg4":[1400,622],"bcg5":[1400,622],"bcg6":[1400,586],"adn1":[1080,1350],"adn2":[1080,1350],"adn3":[1080,1350],"adn4":[1080,1350],"adn5":[1080,1350],"adn6":[1080,1350],"adn7":[1080,1350],"adn8":[1080,1350],"adn9":[1080,1350],"adn10":[1080,1350],"adn11":[1080,1350],"md1":[1400,788],"mdt1":[320,180],"md2":[1400,788],"mdt2":[320,180],"md3":[1400,788],"mdt3":[320,180],"md4":[1400,788],"mdt4":[320,180],"md5":[1400,788],"mdt5":[320,180],"md6":[1400,788],"mdt6":[320,180],"md7":[1400,788],"mdt7":[320,180],"md8":[1400,788],"mdt8":[320,180],"md9":[1400,788],"mdt9":[320,180],"gx1":[1400,788],"gxt1":[320,180],"gx2":[1400,788],"gxt2":[320,180],"gx3":[1400,788],"gxt3":[320,180],"gx4":[1400,788],"gxt4":[320,180],"gx5":[1400,788],"gxt5":[320,180],"gx6":[1400,788],"gxt6":[320,180],"gx7":[1400,788],"gxt7":[320,180],"gx8":[1400,788],"gxt8":[320,180],"gx9":[1400,788],"gxt9":[320,180],"gx10":[1400,788],"gxt10":[320,180],"gx11":[1400,788],"gxt11":[320,180],"gx12":[1400,788],"gxt12":[320,180],"gx13":[1400,788],"gxt13":[320,180],"tl_chatgpt":[88,88],"tl_claude":[88,88],"tl_gemini":[88,88]};
+const IMG={"lv1":"assets/img/lv1.jpg","lv2":"assets/img/lv2.jpg","lv3":"assets/img/lv3.jpg","lv4":"assets/img/lv4.jpg","lv5":"assets/img/lv5.jpg","lv6":"assets/img/lv6.jpg","lv7":"assets/img/lv7.jpg","lv8":"assets/img/lv8.jpg","ada4":"assets/img/ada4.jpg","ada5":"assets/img/ada5.jpg","ada6":"assets/img/ada6.jpg","bc4":"assets/img/bc4.jpg","bc5":"assets/img/bc5.jpg","bc6":"assets/img/bc6.jpg","mv4":"assets/img/mv4.jpg","mv5":"assets/img/mv5.jpg","mv6":"assets/img/mv6.jpg","tk4":"assets/img/tk4.jpg","tk5":"assets/img/tk5.jpg","tk6":"assets/img/tk6.jpg","sk_p1":"assets/img/sk_p1.jpg","sk_p2":"assets/img/sk_p2.jpg","sk_p3":"assets/img/sk_p3.jpg","sk_p4":"assets/img/sk_p4.jpg","sk_p5":"assets/img/sk_p5.jpg","sk_p6":"assets/img/sk_p6.jpg","sk_p7":"assets/img/sk_p7.jpg","sk_p8":"assets/img/sk_p8.jpg","sk_p9":"assets/img/sk_p9.jpg","sk_p10":"assets/img/sk_p10.jpg","sk_p11":"assets/img/sk_p11.jpg","sk_s1":"assets/img/sk_s1.jpg","sk_s2":"assets/img/sk_s2.jpg","sk_s3":"assets/img/sk_s3.jpg","sk_s4":"assets/img/sk_s4.jpg","sk_s5":"assets/img/sk_s5.jpg","sk_s6":"assets/img/sk_s6.jpg","sk_s7":"assets/img/sk_s7.jpg","ai":"assets/img/ai.png","ps":"assets/img/ps.png","ae":"assets/img/ae.png","fg":"assets/img/fg.png","cv":"assets/img/cv.png","t6":"assets/img/t6.png","t7":"assets/img/t7.png","ada1":"assets/img/ada1.jpg","ada2":"assets/img/ada2.jpg","ada3":"assets/img/ada3.jpg","bc1":"assets/img/bc1.jpg","bc2":"assets/img/bc2.jpg","bc3":"assets/img/bc3.jpg","grasp":"assets/img/grasp.jpg","medic":"assets/img/medic.jpg","mixeal":"assets/img/mixeal.jpg","mv1":"assets/img/mv1.jpg","mv2":"assets/img/mv2.jpg","mv3":"assets/img/mv3.jpg","portrait":"assets/img/portrait.jpg","tk1":"assets/img/tk1.jpg","tk2":"assets/img/tk2.jpg","tk3":"assets/img/tk3.jpg","bg1":"assets/img/bg1.webp","bg1p1":"assets/img/bg1p1.webp","bg1p2":"assets/img/bg1p2.webp","bg1p3":"assets/img/bg1p3.webp","bg2":"assets/img/bg2.webp","bg2p1":"assets/img/bg2p1.webp","bg2p2":"assets/img/bg2p2.webp","bg2p3":"assets/img/bg2p3.webp","bg3":"assets/img/bg3.webp","bg3p1":"assets/img/bg3p1.webp","bg3p2":"assets/img/bg3p2.webp","bg3p3":"assets/img/bg3p3.webp","bg4":"assets/img/bg4.webp","bg4p1":"assets/img/bg4p1.webp","bg4p2":"assets/img/bg4p2.webp","bg4p3":"assets/img/bg4p3.webp","bg5":"assets/img/bg5.webp","bg5p1":"assets/img/bg5p1.webp","bg5p2":"assets/img/bg5p2.webp","bg5p3":"assets/img/bg5p3.webp","bg6":"assets/img/bg6.webp","bg6p1":"assets/img/bg6p1.webp","bg6p2":"assets/img/bg6p2.webp","bg6p3":"assets/img/bg6p3.webp","bg7":"assets/img/bg7.webp","bg7p1":"assets/img/bg7p1.webp","bg7p2":"assets/img/bg7p2.webp","bg7p3":"assets/img/bg7p3.webp","bg8":"assets/img/bg8.webp","bg8p1":"assets/img/bg8p1.webp","bg8p2":"assets/img/bg8p2.webp","bg8p3":"assets/img/bg8p3.webp","ba1":"assets/img/ba1.webp","ba2":"assets/img/ba2.webp","ba3":"assets/img/ba3.webp","ba4":"assets/img/ba4.webp","ba5":"assets/img/ba5.webp","ba6":"assets/img/ba6.webp","ba7":"assets/img/ba7.webp","ba8":"assets/img/ba8.webp","bg9":"assets/img/bg9.webp","ex1":"assets/img/ex1.webp","ex2":"assets/img/ex2.webp","ex3":"assets/img/ex3.webp","ex4":"assets/img/ex4.webp","bs1":"assets/img/bs1.webp","bs2":"assets/img/bs2.webp","bs3":"assets/img/bs3.webp","bs4":"assets/img/bs4.webp","bs5":"assets/img/bs5.webp","pa1":"assets/img/pa1.webp","pa2":"assets/img/pa2.webp","pa3":"assets/img/pa3.webp","pa4":"assets/img/pa4.webp","lf1":"assets/img/lf1.png","lf2":"assets/img/lf2.png","lf3":"assets/img/lf3.png","lf4":"assets/img/lf4.png","lf5":"assets/img/lf5.png","lf6":"assets/img/lf6.png","lf7":"assets/img/lf7.png","lf5m":"assets/img/lf5m.png","lf6m":"assets/img/lf6m.png","lf8":"assets/img/lf8.png","lf9":"assets/img/lf9.png","tkn1":"assets/img/tkn1.jpg","tkn2":"assets/img/tkn2.jpg","tkn3":"assets/img/tkn3.jpg","tkn4":"assets/img/tkn4.jpg","tkn5":"assets/img/tkn5.jpg","tkn6":"assets/img/tkn6.jpg","tkn7":"assets/img/tkn7.jpg","tkn8":"assets/img/tkn8.jpg","tkn9":"assets/img/tkn9.jpg","bcg1":"assets/img/bcg1.webp","bcg2":"assets/img/bcg2.webp","bcg3":"assets/img/bcg3.webp","bcg4":"assets/img/bcg4.webp","bcg5":"assets/img/bcg5.webp","bcg6":"assets/img/bcg6.webp","adn1":"assets/img/adn1.jpg","adn2":"assets/img/adn2.jpg","adn3":"assets/img/adn3.jpg","adn4":"assets/img/adn4.jpg","adn5":"assets/img/adn5.jpg","adn6":"assets/img/adn6.jpg","adn7":"assets/img/adn7.jpg","adn8":"assets/img/adn8.jpg","adn9":"assets/img/adn9.jpg","adn10":"assets/img/adn10.jpg","adn11":"assets/img/adn11.jpg","md1":"assets/img/md1.webp","mdt1":"assets/img/mdt1.jpg","md2":"assets/img/md2.webp","mdt2":"assets/img/mdt2.jpg","md3":"assets/img/md3.webp","mdt3":"assets/img/mdt3.jpg","md4":"assets/img/md4.webp","mdt4":"assets/img/mdt4.jpg","md5":"assets/img/md5.webp","mdt5":"assets/img/mdt5.jpg","md6":"assets/img/md6.webp","mdt6":"assets/img/mdt6.jpg","md7":"assets/img/md7.webp","mdt7":"assets/img/mdt7.jpg","md8":"assets/img/md8.webp","mdt8":"assets/img/mdt8.jpg","md9":"assets/img/md9.webp","mdt9":"assets/img/mdt9.jpg","gx1":"assets/img/gx1.webp","gxt1":"assets/img/gxt1.jpg","gx2":"assets/img/gx2.webp","gxt2":"assets/img/gxt2.jpg","gx3":"assets/img/gx3.webp","gxt3":"assets/img/gxt3.jpg","gx4":"assets/img/gx4.webp","gxt4":"assets/img/gxt4.jpg","gx5":"assets/img/gx5.webp","gxt5":"assets/img/gxt5.jpg","gx6":"assets/img/gx6.webp","gxt6":"assets/img/gxt6.jpg","gx7":"assets/img/gx7.webp","gxt7":"assets/img/gxt7.jpg","gx8":"assets/img/gx8.webp","gxt8":"assets/img/gxt8.jpg","gx9":"assets/img/gx9.webp","gxt9":"assets/img/gxt9.jpg","gx10":"assets/img/gx10.webp","gxt10":"assets/img/gxt10.jpg","gx11":"assets/img/gx11.webp","gxt11":"assets/img/gxt11.jpg","gx12":"assets/img/gx12.webp","gxt12":"assets/img/gxt12.jpg","gx13":"assets/img/gx13.webp","gxt13":"assets/img/gxt13.jpg","tl_chatgpt":"assets/img/tl_chatgpt.svg","tl_claude":"assets/img/tl_claude.svg","tl_gemini":"assets/img/tl_gemini.svg","tl_runway":"assets/img/tl_runway.svg","dash1":"assets/img/dash1.png","dash2":"assets/img/dash2.png","dash3":"assets/img/dash3.png","dash4":"assets/img/dash4.png","dash5":"assets/img/dash5.png","dash6":"assets/img/dash6.png","lf2m":"assets/img/lf2m.png","dash7":"assets/img/dash7.png","dash8":"assets/img/dash8.png"};
+const DIM={"lv1":[600,750],"lv2":[600,750],"lv3":[600,750],"lv4":[600,750],"lv5":[600,750],"lv6":[600,750],"lv7":[600,750],"lv8":[600,750],"ada4":[454,582],"ada5":[475,775],"ada6":[455,582],"bc4":[410,726],"bc5":[408,726],"bc6":[410,726],"mv4":[435,540],"mv5":[425,540],"mv6":[430,540],"tk4":[470,600],"tk5":[472,600],"tk6":[470,600],"sk_p1":[600,750],"sk_p2":[600,750],"sk_p3":[600,750],"sk_p4":[600,750],"sk_p5":[600,750],"sk_p6":[600,750],"sk_p7":[600,750],"sk_p8":[600,750],"sk_p9":[600,750],"sk_p10":[600,750],"sk_p11":[600,750],"sk_s1":[504,896],"sk_s2":[504,896],"sk_s3":[504,896],"sk_s4":[504,896],"sk_s5":[504,896],"sk_s6":[504,896],"sk_s7":[504,896],"ai":[96,96],"ps":[96,96],"ae":[96,96],"fg":[96,96],"cv":[96,96],"t6":[96,96],"t7":[96,96],"ada1":[496,623],"ada2":[489,623],"ada3":[493,623],"bc1":[419,741],"bc2":[408,741],"bc3":[408,741],"grasp":[900,390],"medic":[900,625],"mixeal":[900,503],"mv1":[428,544],"mv2":[428,544],"mv3":[431,544],"portrait":[460,493],"tk1":[465,585],"tk2":[483,585],"tk3":[483,585],"bg1":[1400,622],"bg1p1":[627,836],"bg1p2":[627,836],"bg1p3":[627,836],"bg2":[1400,622],"bg2p1":[627,836],"bg2p2":[627,836],"bg2p3":[627,836],"bg3":[1400,622],"bg3p1":[627,836],"bg3p2":[628,836],"bg3p3":[627,836],"bg4":[1400,622],"bg4p1":[627,836],"bg4p2":[627,836],"bg4p3":[627,836],"bg5":[1400,622],"bg5p1":[627,836],"bg5p2":[627,836],"bg5p3":[627,836],"bg6":[1400,622],"bg6p1":[627,836],"bg6p2":[628,836],"bg6p3":[627,836],"bg7":[1400,622],"bg7p1":[627,836],"bg7p2":[627,836],"bg7p3":[627,836],"bg8":[1400,622],"bg8p1":[627,836],"bg8p2":[628,836],"bg8p3":[627,836],"ba1":[1400,600],"ba2":[1400,600],"ba3":[1400,600],"ba4":[1400,600],"ba5":[1400,600],"ba6":[1400,600],"ba7":[1400,600],"ba8":[1400,600],"bg9":[1400,600],"ex1":[1080,1350],"ex2":[1080,1350],"ex3":[1080,1350],"ex4":[1080,1350],"bs1":[1080,1350],"bs2":[1080,1350],"bs3":[1080,1350],"bs4":[1080,1350],"bs5":[1080,1350],"pa1":[1080,1350],"pa2":[1080,1350],"pa3":[1080,1350],"pa4":[1080,1350],"lf1":[118,70],"lf2":[800,318],"lf3":[365,109],"lf4":[234,153],"lf5":[303,114],"lf6":[395,105],"lf7":[1391,610],"lf5m":[303,114],"lf6m":[395,105],"lf8":[420,206],"lf9":[310,92],"tkn1":[1080,1350],"tkn2":[1080,1350],"tkn3":[1080,1350],"tkn4":[1080,1350],"tkn5":[1080,1350],"tkn6":[1080,1350],"tkn7":[1080,1350],"tkn8":[1080,1350],"tkn9":[1080,1350],"bcg1":[1400,622],"bcg2":[1400,622],"bcg3":[1400,622],"bcg4":[1400,622],"bcg5":[1400,622],"bcg6":[1400,586],"adn1":[1080,1350],"adn2":[1080,1350],"adn3":[1080,1350],"adn4":[1080,1350],"adn5":[1080,1350],"adn6":[1080,1350],"adn7":[1080,1350],"adn8":[1080,1350],"adn9":[1080,1350],"adn10":[1080,1350],"adn11":[1080,1350],"md1":[1400,788],"mdt1":[320,180],"md2":[1400,788],"mdt2":[320,180],"md3":[1400,788],"mdt3":[320,180],"md4":[1400,788],"mdt4":[320,180],"md5":[1400,788],"mdt5":[320,180],"md6":[1400,788],"mdt6":[320,180],"md7":[1400,788],"mdt7":[320,180],"md8":[1400,788],"mdt8":[320,180],"md9":[1400,788],"mdt9":[320,180],"gx1":[1400,788],"gxt1":[320,180],"gx2":[1400,788],"gxt2":[320,180],"gx3":[1400,788],"gxt3":[320,180],"gx4":[1400,788],"gxt4":[320,180],"gx5":[1400,788],"gxt5":[320,180],"gx6":[1400,788],"gxt6":[320,180],"gx7":[1400,788],"gxt7":[320,180],"gx8":[1400,788],"gxt8":[320,180],"gx9":[1400,788],"gxt9":[320,180],"gx10":[1400,788],"gxt10":[320,180],"gx11":[1400,788],"gxt11":[320,180],"gx12":[1400,788],"gxt12":[320,180],"gx13":[1400,788],"gxt13":[320,180],"tl_chatgpt":[88,88],"tl_claude":[88,88],"tl_gemini":[88,88],"tl_runway":[88,88],"dash1":[1122,1402],"dash2":[1122,1402],"dash3":[1122,1402],"dash4":[1122,1402],"dash5":[1122,1402],"dash6":[1122,1402],"lf2m":[800,318],"dash7":[1122,1402],"dash8":[1122,1402]};
 const ALT_SK={"sk_p1":"Starkids post: Time to shine, creating the sweetest smiles and memories","sk_p2":"Starkids post: Fierce and fabulous, the ultimate K-pop makeover","sk_p3":"Starkids post: Dream braids, a little pop of fun","sk_p4":"Starkids post: A mother's love shines bright, bonding moments at StarKids","sk_p5":"Starkids post: Cornrow pony braids, the can I have colour phase","sk_p6":"Starkids post: Little angels, big sparkles","sk_p7":"Starkids post: Princess power pony braids","sk_p8":"Starkids post: Mom and daughter braids","sk_p9":"Starkids post: Curls, shades and glam vibes","sk_p10":"Starkids post: Her K-pop fantasy, her way","sk_p11":"Starkids post: Half-up ponytail braid post in Arabic","sk_s1":"Starkids reel cover: Best day ever, a magical salon day with my little fairies","sk_s2":"Starkids reel cover: Turning 10 in sparty style","sk_s3":"Starkids reel cover: Dubai's coolest kids salon, two StarKids locations","sk_s4":"Starkids reel cover: The braid has a colourful secret","sk_s5":"Starkids reel cover: Mermaid mode activated","sk_s6":"Starkids reel cover: The little gent's pit stop","sk_s7":"Starkids reel cover: Rumi: wait, that braid? Girl, who did your hair?"};
 /* IMG[k] is the web-sized file shown in galleries; FULL[k] (when present) is the larger original loaded only when an image is opened in a viewer. Both are files in assets/. */
 const FULL={"bg1":"assets/full/bg1.webp","bg2":"assets/full/bg2.webp","bg3":"assets/full/bg3.webp","bg4":"assets/full/bg4.webp","bg5":"assets/full/bg5.webp","bg6":"assets/full/bg6.webp","bg7":"assets/full/bg7.webp","bg8":"assets/full/bg8.webp","ba1":"assets/full/ba1.webp","ba2":"assets/full/ba2.webp","ba3":"assets/full/ba3.webp","ba4":"assets/full/ba4.webp","ba5":"assets/full/ba5.webp","ba6":"assets/full/ba6.webp","ba7":"assets/full/ba7.webp","ba8":"assets/full/ba8.webp","bg9":"assets/full/bg9.webp","bcg1":"assets/full/bcg1.jpg","bcg2":"assets/full/bcg2.jpg","bcg3":"assets/full/bcg3.jpg","bcg4":"assets/full/bcg4.jpg","bcg5":"assets/full/bcg5.jpg","bcg6":"assets/full/bcg6.jpg","md1":"assets/full/md1.jpg","md2":"assets/full/md2.jpg","md3":"assets/full/md3.jpg","md4":"assets/full/md4.jpg","md5":"assets/full/md5.jpg","md6":"assets/full/md6.jpg","md7":"assets/full/md7.jpg","md8":"assets/full/md8.jpg","md9":"assets/full/md9.jpg","gx1":"assets/full/gx1.jpg","gx2":"assets/full/gx2.jpg","gx3":"assets/full/gx3.jpg","gx4":"assets/full/gx4.jpg","gx5":"assets/full/gx5.jpg","gx6":"assets/full/gx6.jpg","gx7":"assets/full/gx7.jpg","gx8":"assets/full/gx8.jpg","gx9":"assets/full/gx9.jpg","gx10":"assets/full/gx10.jpg","gx11":"assets/full/gx11.jpg","gx12":"assets/full/gx12.jpg","gx13":"assets/full/gx13.jpg"};
 const PHOTOS={portrait:IMG.portrait};
-/* Contact form: paste your form service endpoint here (for example a Formspree or Netlify Forms URL). While empty, the form never sends. */
-/* Contact form delivery: FormSubmit (https://formsubmit.co) forwards each enquiry to the address in the URL. No account or secret key is needed, but the FIRST submission triggers an activation email to that address; click "Activate Form" in it once. Until then submissions are held and the form shows an error. To use another service (Formspree, Web3Forms, Netlify), replace this URL and adjust FORM_FIELDS. */
-const FORM_ENDPOINT="https://formsubmit.co/ajax/sobhazadm@gmail.com";
 /* Add real testimonials as {quote:"...",name:"...",role:"..."} */
 /* Sample cards for layout preview only (fictional, labelled on the page). Replace them with genuine client feedback, or delete these three entries, before launch. */
 const TESTIMONIALS=[
@@ -500,14 +542,13 @@ const REELS=[
  {client:"Deluxe Digital Solutions",n:1,audio:true,src:"reels/reel8.mp4",poster:"reels/poster8.jpg"},
  {client:"ADA Banyo",n:1,audio:true,src:"reels/reel9.mp4",poster:"reels/poster9.jpg"},
  {client:"Becem Travel",n:1,audio:true,src:"reels/reel10.mp4",poster:"reels/poster10.jpg"},
- {client:"Deluxe Promosyon",n:1,audio:true,src:"reels/reel11.mp4",poster:"reels/poster11.jpg"},
  {client:"Livayi Cyprus",n:1,audio:true,src:"reels/reel12.mp4",poster:"reels/poster12.jpg"},
  {client:"Maviyollar Turizm",n:1,audio:true,src:"reels/reel13.mp4",poster:"reels/poster13.jpg"},
  {client:"Micom",n:1,audio:true,src:"reels/reel14.mp4",poster:"reels/poster14.jpg"},
  {client:"Teknoloji Kıbrıs",n:1,audio:true,src:"reels/reel15.mp4",poster:"reels/poster15.jpg"}
  ];
 /* Tool logos are stored in assets/img (keys tl_*). "Omi Flash" is intentionally NOT listed: its exact product name is unconfirmed. */
-const TOOLS=[["Illustrator","ai"],["Photoshop","ps"],["After Effects","ae"],["Figma","fg"],["Canva","cv"],["Lovart","t6"],["ChatGPT","tl_chatgpt"],["Claude","tl_claude"],["Gemini","tl_gemini"]];
+const TOOLS=[["Illustrator","ai"],["Photoshop","ps"],["After Effects","ae"],["Figma","fg"],["Canva","cv"],["Lovart","t6"],["RUNWAY ML","tl_runway"],["ChatGPT","tl_chatgpt"],["Claude","tl_claude"],["Gemini Omni Flash","tl_gemini"]];
 const SERVICES=[
 ["Logo design","Distinctive logo marks with clear typography, made to work across formats."],
 ["Social media and advertising","Post, story and ad systems for brands that publish often."],
@@ -524,33 +565,32 @@ const PROJECTS=[
 {id:"ada",title:"ADA Banyo",cat:"Social Media",client:"ADA Banyo",blurb:"Social media post designs for ADA Banyo, a contemporary bathroom brand.",deliverables:"Social media posts",n:2,
  groups:[{label:"Posts",keys:[...K("ada",1,4),"ada6",...K("adn",1,11)],panel:true,cols:2}]},
 {id:"dash",title:"Dash Masters",cat:"Social Media",client:"Dash Masters",blurb:"Social media posts for Dash Masters, a commercial vehicle service brand, covering lube, wash, alignment, tire and repair services.",deliverables:"Social media posts",n:2,
- groups:[{label:"Portrait posts",keys:K("dash",4,6),panel:true,cols:2},{label:"Square posts",keys:K("dash",1,3),panel:true,cols:2}]},
-{id:"deluxe",title:"Deluxe Promosyon",cat:"Social Media",client:"Deluxe Promosyon",blurb:"Product-led social media posts for Deluxe Promosyon, a promotional products and corporate branding company.",deliverables:"Social media posts",n:2,
- groups:[{label:"Posts",keys:K("dx",1,6),panel:true,cols:2}]},
+ frame:"4/5", /* all 8 supplied posts are true 4:5 files (1122×1402), shown whole in 4:5 frames. */
+ groups:[{label:"Social media posts",keys:K("dash",1,8),panel:true,cols:2}]},
 {id:"tk",title:"Teknoloji Kıbrıs",cat:"Social Media",client:"Teknoloji Kıbrıs",blurb:"Product social media posts for Teknoloji Kıbrıs, a consumer electronics retailer.",deliverables:"Social media posts",n:2,
- groups:[{label:"New campaign",keys:K("tkn",1,9),panel:true,cols:3},{label:"Product designs",keys:K("tk",1,6),panel:true,cols:2}]},
+ groups:[{label:"New campaign",keys:K("tkn",1,9),panel:true,cols:3},{label:"Product ad designs",keys:K("tk",1,6),panel:true,cols:2}]},
 {id:"mv",title:"Maviyollar Turizm",cat:"Social Media",client:"Maviyollar Turizm",blurb:"Social media posts for Maviyollar Turizm, a travel and tourism brand.",deliverables:"Social media posts",n:2,
  groups:[{label:"Posts",keys:K("mv",1,6),panel:true,cols:2}]},
-{id:"bc",title:"Becem Travel",cat:"Social Media",client:"Becem Travel",blurb:"Instagram grids and special-day stories for Becem Travel.",deliverables:"Instagram grids and special-day stories",n:12,layout:"grids",
+{id:"bc",title:"Becem Travel",cat:"Social Media",client:"Becem Travel",blurb:"Panoramic Instagram grids and special-day stories for Becem Travel.",deliverables:"Panoramic Instagram grids and special-day stories",n:12,layout:"grids",
  /* Becem Travel: complete Instagram grid compositions (shown as supplied, not split into tiles), followed by the special-day stories. */
- grids:[{k:"bcg1",label:"Your holiday starts here",panels:false},{k:"bcg2",label:"From arrivals to relaxation",panels:false},{k:"bcg3",label:"Your journey. Your pace.",panels:false},{k:"bcg4",label:"Ready for your plans",panels:false},{k:"bcg5",label:"Take a closer look",panels:false},{k:"bcg6",label:"Discover Cyprus. Private tours",panels:false}],
+ grids:[{k:"bcg1",label:"Your holiday starts here",panels:false,ig:true},{k:"bcg2",label:"From arrivals to relaxation",panels:false},{k:"bcg3",label:"Your journey. Your pace.",panels:false},{k:"bcg4",label:"Ready for your plans",panels:false},{k:"bcg5",label:"Take a closer look",panels:false},{k:"bcg6",label:"Discover Cyprus. Private tours",panels:false}],
  stories:{key:"Special-day stories",keys:K("bc",1,6)},
- groups:[{label:"Instagram grids",keys:K("bcg",1,6),panel:true,cols:1},{label:"Special-day stories",keys:K("bc",1,6),panel:false,cols:3}]},
+ groups:[{label:"Panoramic Instagram Grids",keys:K("bcg",1,6),panel:true,cols:1},{label:"Special-day stories",keys:K("bc",1,6),panel:false,cols:3}]},
 {id:"livayi",title:"Livayi Cyprus",cat:"Social Media",client:"Livayi Kıbrıs",blurb:"Brand palette, typography and social media designs for Livayi Cyprus, a Northern Cyprus supplier brand.",deliverables:"Brand palette, typography and social media designs",n:2,
  groups:[{label:"Social media posts",keys:K("lv",1,8),panel:true,cols:2}]},
-{id:"banio",title:"Banio",cat:"Social Media",client:"Banio Cyprus",blurb:"Instagram campaign posts, stories and product grid designs for Banio, a bathroom products brand.",deliverables:"Instagram campaign posts, stories and product grids",n:13,layout:"grids",
+{id:"banio",title:"Banio",cat:"Social Media",client:"Banio Cyprus",blurb:"Panoramic Instagram grids, campaign posts and stories for Banio, a bathroom products brand.",deliverables:"Panoramic Instagram grids, campaign posts and stories",n:13,layout:"grids",
  /* Banio: each entry is one complete 3-post Instagram grid (k = full composition, panels = its three individual posts, cut as equal thirds) */
- grids:[{k:"bg1",label:"Luna"},{k:"bg9",label:"Kapadokya, Grande, Ordin, Arte and Este",panels:false},{k:"bg2",label:"Iron"},{k:"bg3",label:"Prestij"},{k:"bg4",label:"Ordin"},{k:"bg5",label:"Petra"},{k:"bg6",label:"Arno"},{k:"bg7",label:"Art"},{k:"bg8",label:"Freestanding bathtubs"},
+ grids:[{k:"bg1",label:"Luna",ig:true},{k:"bg9",label:"Kapadokya, Grande, Ordin, Arte and Este",panels:false},{k:"bg2",label:"Iron"},{k:"bg3",label:"Prestij"},{k:"bg4",label:"Ordin"},{k:"bg5",label:"Petra"},{k:"bg6",label:"Arno"},{k:"bg7",label:"Art"},{k:"bg8",label:"Freestanding bathtubs"},
   {k:"ba3",label:"Stone Line, Iron and Art",panels:false},{k:"ba5",label:"Iron, green double vanity",panels:false},{k:"ba2",label:"Benti10 Artgray accessories",panels:false},{k:"ba8",label:"Atlas",panels:false}],
  ads:{featured:["pa1","pa2","pa3","pa4"]}, /* homepage "Selected product ads" gallery: edit this list to feature other ads (any keys from the ads group below) */
  campaigns:[
   {id:"basin",title:"Basin collection",slides:["bs1","bs2","bs3","bs4","bs5"]}, /* cover first, then one slide per product */
   {id:"exo",title:"Exo Renkli",slides:["ex1","ex2","ex3","ex4"]}], /* an empty slides:[] shows a labelled development placeholder */
- groups:[{label:"Complete grids",keys:["bg1","bg9","bg2","bg3","bg4","bg5","bg6","bg7","bg8","ba3","ba5","ba2","ba8"],panel:true,cols:1},{label:"Selected product ads",keys:["pa1","pa2","pa3","pa4","ba1","ba4","ba6","ba7"],panel:false,cols:2}]},
+ groups:[{label:"Panoramic Instagram Grids",keys:["bg1","bg9","bg2","bg3","bg4","bg5","bg6","bg7","bg8","ba3","ba5","ba2","ba8"],panel:true,cols:1},{label:"Selected product ads",keys:["pa1","pa2","pa3","pa4","ba1","ba4","ba6","ba7"],panel:false,cols:2}]},
 {id:"logo",title:"Logofolio",cat:"Logo design",client:"Multiple brands (confirm each)",blurb:"A selection of logos designed for businesses and independent brands, focusing on distinctive marks and clear typography.",deliverables:"Logo marks",n:9,layout:"logos",
  /* Logofolio: size = logo width as a % of its cell (adjust each individually). mono = optional black knockout asset used for the default black state when white parts would vanish under brightness(0).
     A slot with no k is a labelled development placeholder: add the logo file as IMG key and set k. */
- logos:[{k:"lf1",size:64},{k:"lf2",size:90},{k:"lf3",size:82},{k:"lf4",size:54},{k:"lf5",size:74,mono:"lf5m"},{k:"lf6",size:88,mono:"lf6m"},{k:"lf7",size:88},{k:"lf8",size:86},{k:"lf9",size:84,hold:true}],
+ logos:[{k:"lf1",size:64},{k:"lf2",size:90,mono:"lf2m"},{k:"lf3",size:82},{k:"lf4",size:54},{k:"lf5",size:74,mono:"lf5m"},{k:"lf6",size:88,mono:"lf6m"},{k:"lf7",size:88},{k:"lf8",size:86},{k:"lf9",size:84,hold:true}],
  caps:{lf8:"Maviyollar Turizm",lf9:"Aykut Group of Companies",lf1:"ADA Banyo",lf2:"KYNETIK",lf3:"Jobifer",lf4:"Better Vigor",lf5:"Amali",lf6:"Khaata AI",lf7:"Island Green Holiday"},
  groups:[{label:"Logos",keys:K("lf",1,9),panel:true,cols:3}]},
 {id:"pitch",title:"Pitch Decks",cat:"Presentations",client:"Medic VR, Grasp XR",blurb:"Pitch decks.",deliverables:"Pitch decks and presentation design",n:2,layout:"decks",
@@ -582,15 +622,6 @@ const CASES={
   "direction": "The selected designs alternate between warm, atmospheric spa scenes and bright, minimal product compositions. Large product imagery, contrasting headline weights and restrained supporting information keep the bath or whirlpool product at the center of each post.",
   "outcome": "A selection of product-focused posts balancing aspirational bathroom imagery with clear promotional messaging."
  },
- "deluxe": {
-  "client": "Deluxe Promosyon",
-  "blurb": "Product-led social media designs for a promotional merchandise and corporate gifting business.",
-  "deliverables": "Social media product advertisements for promotional merchandise and corporate gifts.",
-  "role": "Creative direction for the selected posts, product presentation, image generation and compositing, promotional message hierarchy, typography, and layout.",
-  "brief": "Make everyday promotional products feel considered and valuable as business gifts, while communicating their features and encouraging product enquiries.",
-  "direction": "The selected work places pens, gift sets and desk products in carefully staged compositions with blue and teal backgrounds. Directional lighting and concise headline hierarchies give different product categories a consistent commercial presentation.",
-  "outcome": "A coordinated product-post series presenting corporate gifts and practical merchandise through a consistent visual approach."
- },
  "tk": {
   "client": "Teknoloji Kıbrıs",
   "blurb": "Social media product advertising for a Cyprus-based e-commerce retailer offering electronics, home appliances and everyday technology, covering an earlier appliance series and a newer lifestyle and studio campaign.",
@@ -612,29 +643,29 @@ const CASES={
  "dash": {
   "client": "Dash Masters",
   "blurb": "Social media designs for a commercial vehicle and fleet-care business in Grand Prairie, Texas, promoting truck wash, repairs, tires, alignment and maintenance.",
-  "deliverables": "Portrait and square social media service advertisements.",
-  "role": "Creative direction for the selected posts, service-led visual concepts, image creation and compositing, typography, and portrait and square layouts.",
+  "deliverables": "Portrait (4:5) social media service advertisements.",
+  "role": "Creative direction for the selected posts, service-led visual concepts, image creation and compositing, typography, and portrait 4:5 layouts.",
   "brief": "Explain distinct truck-care services quickly to owner-operators and fleet customers through clear service headlines and direct contact information.",
-  "direction": "The selected portrait posts use a light background, tall condensed teal headlines and large truck imagery. Service-specific visual cues distinguish repairs, washing and tires while repeated branding and contact details maintain consistency.",
-  "outcome": "A set of service-led truck-care posts adapted to portrait and square formats."
+  "direction": "The set pairs light, airy layouts with tall condensed teal headlines and large truck imagery against darker blue offer layouts. Service-specific visual cues distinguish repairs, washing, tires and lube while repeated branding and contact details maintain consistency.",
+  "outcome": "A set of eight service-led truck-care posts in a consistent 4:5 portrait format."
  },
  "banio": {
   "client": "Banio Cyprus",
-  "blurb": "Connected Instagram grids, standalone product ads and carousel campaigns for a bathroom retailer in Lefkoşa offering shower enclosures, furniture, bathtubs and accessories.",
-  "deliverables": "Connected Instagram compositions, standalone product advertisements and two product carousels.",
-  "role": "Creative direction for the selected work, image generation and compositing, product storytelling, typography, and layout across connected compositions, standalone ads and carousels.",
-  "brief": "Present a varied bathroom collection through a cohesive social presence, using connected compositions for product ranges, standalone ads for focused messages and carousels for sequential product exploration.",
-  "direction": "The selected work uses architectural interiors, coordinated materials and collection-specific palettes. Connected grids move between full-room views and product details; standalone ads highlight individual ranges; the basin and Exo campaigns preserve a consistent visual setting across successive slides.",
-  "outcome": "A collection of connected compositions, standalone ads and two carousel sequences presenting bathroom products at different levels of detail."
+  "blurb": "Panoramic Instagram grids, standalone product ads and carousel campaigns for a bathroom retailer in Lefkoşa offering shower enclosures, furniture, bathtubs and accessories.",
+  "deliverables": "Panoramic Instagram grids, standalone product advertisements and two product carousels.",
+  "role": "Creative direction for the selected work, image generation and compositing, product storytelling, typography, and layout across panoramic Instagram grids, standalone ads and carousels.",
+  "brief": "Present a varied bathroom collection through a cohesive social presence, using panoramic Instagram grids for product ranges, standalone ads for focused messages and carousels for sequential product exploration.",
+  "direction": "The selected work uses architectural interiors, coordinated materials and collection-specific palettes. The panoramic grids move between full-room views and product details; standalone ads highlight individual ranges; the basin and Exo campaigns preserve a consistent visual setting across successive slides.",
+  "outcome": "A collection of panoramic Instagram grids, standalone ads and two carousel sequences presenting bathroom products at different levels of detail."
  },
  "bc": {
   "client": "Becem Travel",
-  "blurb": "Instagram grid designs and special-day stories for Becem Travel, a Cyprus airport-transfer and VIP transportation business.",
-  "deliverables": "Six wide Instagram grid compositions and six special-day Instagram stories.",
-  "role": "Occasion-based visual concepts, image creation and compositing, message hierarchy, typography, and vertical Instagram story layouts, extended to wide Instagram grid compositions.",
-  "brief": "Create occasion-specific stories for national, seasonal and awareness dates while retaining a clear connection to the transportation brand, and present the same service through connected Instagram grids that show the vehicle in different settings.",
+  "blurb": "Panoramic Instagram grid designs and special-day stories for Becem Travel, a Cyprus airport-transfer and VIP transportation business.",
+  "deliverables": "Six panoramic Instagram grids and six special-day Instagram stories.",
+  "role": "Occasion-based visual concepts, image creation and compositing, message hierarchy, typography, and vertical Instagram story layouts, extended to panoramic Instagram grids.",
+  "brief": "Create occasion-specific stories for national, seasonal and awareness dates while retaining a clear connection to the transportation brand, and present the same service through panoramic Instagram grids that show the vehicle in different settings.",
   "direction": "The grids centre on a black Mercedes van shown in bright Cyprus settings (an airport terminal, a stone village square and a coastal road at sunset) and in darker graphite layouts with orange-and-white diagonal accents. Each composition carries a short headline in English, Turkish and Russian across its three panels, with the Becem Travel logo at the top and contact buttons along the bottom. The special-day stories change their imagery and palette to suit each occasion, from national-day red to environmental green and summer blue, with large date or occasion lettering and brand marks anchoring the series.",
-  "outcome": "Six connected Instagram grid compositions and six occasion-specific stories, sharing recognizable Becem Travel branding."
+  "outcome": "Six panoramic Instagram grids and six occasion-specific stories, sharing recognizable Becem Travel branding."
  },
  "mv": {
   "client": "MaviYollar Turizm",
@@ -650,13 +681,13 @@ PROJECTS.forEach(p=>{const c=CASES[p.id];if(c)Object.assign(p,c,{cs:true})});
 const ALTS={adn1:"Banyonuz Bize Emanet: a rose-gold corner shower enclosure in a warm bathroom with a sea view",adn2:"Modern Çizginin Son Hali: a rose-gold sliding shower door in a stone-tiled bathroom",adn3:"Suya Bırak Kendini: a freestanding bathtub by a large window with a mountain lake view",adn4:"Karakter Katan Detaylar: a black-framed pentagonal shower enclosure with rain shower at sunset",adn5:"Yaz Fırsatları Başladı: a black sliding shower enclosure with a lilac summer-offers badge",adn6:"Sessizliğin Konforunu Keşfedin: a steamy shower enclosure with four feature icons",adn7:"Her Duşu Bir Ritüele Dönüştürün: a frameless glass walk-in shower in a travertine bathroom",adn8:"Her Detay Bir Bütün: a freestanding bathtub with a matte black floor-standing tap",adn9:"Cam, Işıkla Buluşuyor: a black-framed shower enclosure with light across the glass",adn10:"Leke Değil, Işıltı Bırakır: a close-up of water beads on nano-coated shower glass",adn11:"Güne Başlamanın Daha Güzel Bir Yolu: a white freestanding bathtub with a chrome floor-standing tap",bcg1:"Your holiday starts here, in English, Turkish and Russian: a black Mercedes van at an airport terminal with a couple walking with suitcases",bcg2:"From arrivals to relaxation, in English, Turkish and Russian: a black Mercedes van in a stone Mediterranean village square",bcg3:"Your journey. Your pace., in English, Turkish and Russian: a black Mercedes van on a dark graphite background with orange and white diagonal accents",bcg4:"Ready for your plans, in English, Turkish and Russian: a black Mercedes van with its boot open beside luggage",bcg5:"Take a closer look, in English, Turkish and Russian: three close-up panels of a black Mercedes van's headlight, front and interior",bcg6:"Discover Cyprus. Private tours, in English, Turkish and Russian: a black Mercedes van on a coastal road at sunset",tkn1:"Hisense 12000 BTU inverter air conditioner ad: a woman in orange relaxing on a sofa under a wall-mounted unit",tkn2:"Clatronic 40 cm standing fan ad: a woman in an orange blazer working at a desk in a bright office",tkn3:"Bomann mobile cooler box ad on an orange podium with concentric circles",tkn4:"Schafer air fryer ad: a smiling woman in orange serving food in a bright kitchen",tkn5:"Clatronic single-cup coffee maker with travel mug on an orange podium",tkn6:"Proficook espresso machine ad: a woman in an orange shirt steaming milk beside the machine",tkn7:"Bomann slow juicer ad with a glass of orange juice on an orange podium",tkn8:"Clatronic food slicer ad: a woman slicing bread in a bright kitchen",tkn9:"Clatronic vertical doner grill ad on an orange podium",bg1:"Luna grid: black basin on a wood vanity, terracotta wall, three connected posts. Text: Doğal doku, modern karakter",bg2:"Iron grid: three freestanding vanities in black, brown and green with lit mirrors on a terracotta wall. Text: İhtiyacınıza göre, tarzınıza göre",bg3:"Prestij grid: black fluted-glass vanity and cabinet on an olive wall. Text: Detaylarda karakter",bg4:"Ordin grid: orange and black shelving and vanity on a deep blue wall. Text: Düzene renk katın",bg5:"Petra grid: grey fluted wall-hung vanity and tall cabinet on a burgundy wall. Text: Dokunun zarif ritmi",bg6:"Arno grid: oak fluted vanity, mirror cabinet and tall unit on a green wall. Text: Her detay, günlük hayatınız için",bg7:"Art grid: orange and sage-green modular vanity on a teal wall. Text: Banyonuzda renge yer açın",bg8:"Freestanding bathtubs in six colours (Monart, North, Prestige, Arges, King, May). Text: Rengini seç. Kendine bir an ayır",
 bs1:"Basin collection cover: four basins on stepped plinths. Text: Rengin yeni formu, Mono Kırmızı, Mono Turuncu, Stella Siyah, Altın Desenli Oval",bs2:"Mono Kırmızı red wall-hung basin with a chrome tap (model 3818R)",bs3:"Mono Turuncu orange wall-hung basin with a chrome tap (model 3818O)",bs4:"Stella Siyah black freestanding basin in an arched niche (model STE.L.085B)",bs5:"Altın Desen white countertop basin with a gold pattern (model 5015G-W)",ex1:"Exo Renkli freestanding bathtub in green, slide 1 of 4",ex2:"Exo Renkli freestanding bathtub in purple, slide 2 of 4",ex3:"Exo Renkli freestanding bathtub in orange, slide 3 of 4",ex4:"Exo Renkli freestanding bathtub in blue, slide 4 of 4 (baniocyprus.com)",pa1:"Montana wall-hung vanity with a dark wood drawer, black basin and lit mirror",pa2:"Aqua Altın gold shower set on dark green marble",pa3:"Domino Altın gold countertop basin with a wall-mounted tap",pa4:"Kapadokya, Hitit and Zara vanities in three side-by-side bathroom scenes",bg9:"Five vanity ranges (Kapadokya, Grande, Ordin, Arte, Este) in a sunlit room. Text: Banyonuzun karakterini yansıtın",ba1:"Yucca 9010-YP glass shower enclosure ad, with panel, size and finish options. Text: Şeffaflığın modern hali",ba2:"Benti10 Artgray bathroom accessories ad, five items on a terracotta wall. Text: Banyo detayları, bir sahnede",ba3:"Stone Line, Iron and Art vanity ad. Text: Tarzını banyona taşı. Modern. Zarif. Özgün.",ba4:"Blue vanity and tall cabinet ad with a round lit mirror. Text: Zamansız tasarım, sıcak detaylar",ba5:"Iron green double vanity ad. Text: Doğayla uyumlu bir banyo",ba6:"Zaria stone-effect vanity and tall cabinet ad. Text: Her banyoya özgün bir dokunuş",ba7:"Hazar, Truva, Moon and Alder vanity ranges ad. Text: Tarzını banyona taşı",ba8:"Atlas vanity with a built-in washing machine space ad. Text: Küçük alanlarda büyük çözümler",
 bg1p1:"Luna grid, post 1 of 3",bg1p2:"Luna grid, post 2 of 3",bg1p3:"Luna grid, post 3 of 3",bg2p1:"Iron grid, post 1 of 3",bg2p2:"Iron grid, post 2 of 3",bg2p3:"Iron grid, post 3 of 3",bg3p1:"Prestij grid, post 1 of 3",bg3p2:"Prestij grid, post 2 of 3",bg3p3:"Prestij grid, post 3 of 3",bg4p1:"Ordin grid, post 1 of 3",bg4p2:"Ordin grid, post 2 of 3",bg4p3:"Ordin grid, post 3 of 3",bg5p1:"Petra grid, post 1 of 3",bg5p2:"Petra grid, post 2 of 3",bg5p3:"Petra grid, post 3 of 3",bg6p1:"Arno grid, post 1 of 3",bg6p2:"Arno grid, post 2 of 3",bg6p3:"Arno grid, post 3 of 3",bg7p1:"Art grid, post 1 of 3",bg7p2:"Art grid, post 2 of 3",bg7p3:"Art grid, post 3 of 3",bg8p1:"Freestanding bathtubs grid, post 1 of 3",bg8p2:"Freestanding bathtubs grid, post 2 of 3",bg8p3:"Freestanding bathtubs grid, post 3 of 3",ada1:"İkili lüksün en zarif köşesi, a couple's spa tub",ada2:"Form kadar güzel işlev, a freestanding bathtub",ada3:"Yazın en iyi yatırımı, an outdoor spa pool",ada4:"6 kişilik dev spa keyfiyle, a large spa pool with a sea view",ada5:"Kadınlar Günü, a bath tray with flowers and soap",ada6:"Şehir çatısında ahşap ve teknolojiyle, a rooftop hot tub",
-dash1:"Dash Masters square post: from wash to repairs",dash2:"Lube service square post",dash3:"Wash and alignment square post",dash4:"Semi truck repair post",dash5:"Semi truck wash post",dash6:"Semi truck tires post",
-dx1:"Markanızı imza gibi taşıyın, metal roller pens",dx2:"Motivasyonu artıran kurumsal dokunuşlar, a gift set",dx3:"Her imzaya prestij, a fountain pen",dx4:"Her zaman enerjiniz yanınızda, a power bank",dx5:"Her masada güvenilir yardımcı, a calculator and writing tablet",dx6:"Düzenin asıl formu, a desk organizer",
+dash1:"Dash Masters post: From wash to repairs, we handle it all, a blue semi truck in front of a wash bay with a six-service icon bar",dash2:"Dash Masters post: Tire service, a blue semi truck and stacked tires on a dark blue and white layout with a tire checklist",dash3:"Dash Masters post: Drive smarter, grip harder, tires, a stack of tires between a red and a blue semi truck with a starting-from price badge",dash4:"Dash Masters post: Lube and wash, oil change first then 50% off a wash, a red and a light-blue semi truck with water and oil splashes",dash5:"Dash Masters post: Repair service, a red semi truck with wrenches and pliers on a dark blue panel",dash6:"Dash Masters post: Everything your truck needs in one stop, a blue semi truck with three service photos above it on a light background",dash7:"Dash Masters post: Shine on the highway, semi truck wash, a white semi truck with water splashes on a light background",dash8:"Dash Masters post: Keep your rig rolling strong with semi truck repair, a red semi truck with a wrench and screwdriver on a light background",
+
 tk1:"Decakila air fryer product post",tk2:"Schafer Teepoint stainless kettle product post",tk3:"Clatronic steam cleaner product post",tk4:"Proficook retro kettle product post",tk5:"Schafer filter coffee machine product post",tk6:"Xiaomi smart pressure cooker product post",
 mv1:"Uçuşun bizden, keyfi senden, a flight offer",mv2:"Tek mesaj, eksiksiz tatil, a holiday package",mv3:"İstanbul, Türkiye'ye uçuşun hazır olsun",mv4:"Konforlu konaklama bir mesaj kadar yakın, a hotel offer",mv5:"Maraş, zamanın durduğu şehir",mv6:"Denizin hemen yanı başında, a beach hotel offer",
 bc1:"15 Temmuz Demokrasi ve Milli Birlik Günü story",bc2:"Dünya Çevre Günü story",bc3:"Mutlu Yaz Gündönümü story",bc4:"Babalar Günü story",bc5:"Uluslararası Dostluk Günü story",bc6:"Gazeteciler ve Basın Bayramı story",
 lv1:"Pazar kahvesi bahçede, artificial grass post",lv2:"Doğallığı hisset, artificial grass close-up post",lv3:"Bahçe, çocuk sesiyle güzel, artificial grass post",lv4:"Aynı teras, başka hayat, before and after terrace post",lv5:"Her odanın kendi düzeni, a stackable storage cabinet",lv6:"Her şey elinin altında, a white rolling organizer cart",lv7:"Odadan odaya kolayca, a black rolling organizer cart",lv8:"İki renk, tek düzen, white and black organizer carts",
-lf1:"ADA Banyo logo, with the tagline Bathroom Products, Gazimağusa",lf2:"KYNETIK logo, orange wordmark",lf3:"Jobifer logo, a J symbol with a teal arrow and wordmark",lf4:"Better Vigor logo, blue lettering with the tagline Tasty Delights",lf8:"Maviyollar Turizm logo, two blue palm trees on a small island with the wordmark Maviyollar Turizm",lf9:"Aykut Group of Companies logo, a silver triangular mark with the wordmark Aykut Group of Companies",lf7:"Island Green Holiday logo, a palm tree and sun over a G with waves, with the wordmark Island Green and the tagline Holiday",lf5:"Amali logo, a green shopping bag with the wordmark",lf6:"Khaata AI logo, a wallet and K symbol with the tagline Smart Expense Manager",
+lf1:"ADA Banyo logo, with the tagline Bathroom Products, Gazimağusa",lf2:"KYNETIK logo, an orange wordmark with a shield mark and paint splashes",lf3:"Jobifer logo, a J symbol with a teal arrow and wordmark",lf4:"Better Vigor logo, blue lettering with the tagline Tasty Delights",lf8:"Maviyollar Turizm logo, two blue palm trees on a small island with the wordmark Maviyollar Turizm",lf9:"Aykut Group of Companies logo, a silver triangular mark with the wordmark Aykut Group of Companies",lf7:"Island Green Holiday logo, a palm tree and sun over a G with waves, with the wordmark Island Green and the tagline Holiday",lf5:"Amali logo, a green shopping bag with the wordmark",lf6:"Khaata AI logo, a wallet and K symbol with the tagline Smart Expense Manager",
 mixeal:"Mixeal VR game marketing service profile, title slide",medic:"MedicVR+ pitch deck, title slide",grasp:"Grasp XR pitch deck, selected slides"};
 /* ================================================================== */
 
@@ -678,6 +709,15 @@ function emptyItems(p){return [1,2,3].map(i=>`<div class="it empty" role="group"
 /* Banio extra sections: standalone ads gallery and two independent carousel campaigns */
 function storiesSub(p){const ks=p.stories.keys,items=ks.map((k,i)=>`<div class="it"><button class="fg" type="button" data-act="lbk" data-p="${p.id}" data-keys="${ks.join(",")}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${ks.length})">${img(p,k)}</button></div>`);
  return `<div class="bsub"><h4 class="bh">Special-day stories</h4>${slider({id:"sl-"+p.id+"-stories",label:p.title+" special-day story",n:4,nt:3,nm:2,cls:"wide",items})}</div>`}
+/* Instagram-style presentation frame (experiment, Banio "Luna" only). Purely decorative overlay: set ig:true on a grid entry to turn it on, remove the flag to turn it off.
+   The frame's opening is the middle third of a genuine 3-post panorama; header/footer sit in reserved space above/below the untouched artwork. */
+const IGI={dots:'<svg viewBox="0 0 4 16" fill="currentColor"><circle cx="2" cy="2" r="1.6"/><circle cx="2" cy="8" r="1.6"/><circle cx="2" cy="14" r="1.6"/></svg>',
+ heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20.5s-8-4.9-8-11A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 8 2.7c0 6.1-8 11-8 11z"/></svg>',
+ chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20.5 12A8.5 8.5 0 1 1 12 3.5 8.5 8.5 0 0 1 20.5 12zM12 3.5"/><path d="M4 20.5l1.6-4.2"/></svg>',
+ send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3L3 10.5l7 3 3 7z"/><path d="M10 13.5L21 3"/></svg>',
+ save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3.5h12v17l-6-4.6-6 4.6z"/></svg>'};
+function igw(p,g,btn){if(!g.ig)return btn;
+ return `<div class="igc"><div class="igw">${btn}<span class="igf" aria-hidden="true"><span class="igh"><span class="igav">${esc(p.client[0])}</span><span class="ign">${esc(p.client)}</span>${IGI.dots}</span><span class="igb">${IGI.heart}${IGI.chat}${IGI.send}<i></i>${IGI.save}</span></span></div></div>`}
 function bsubs(p){
  const fa=p.ads.featured;
  const adItems=fa.map((k,i)=>`<div class="it"><button class="fg" type="button" data-act="lbk" data-p="${p.id}" data-keys="${fa.join(",")}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${fa.length})">${img(p,k)}</button></div>`);
@@ -695,21 +735,21 @@ function projectHTML(p){
   return `<article class="project logos" aria-labelledby="t-${p.id}"><div class="lwrap">
   <ul class="lgrid" aria-label="${esc(p.title)}: ${real.length} logos">${ls.map(l=>{if(!l.k)return `<li><div class="lslot" role="group" aria-label="Empty slot for the ${esc(l.slot)} logo">${esc(l.slot)}<small>logo file needed</small></div></li>`;
    const i=real.indexOf(l),w=DIM[l.k][0];
-   return `<li><button class="lgb" type="button" data-act="lb" data-p="${p.id}" data-k="${l.k}" aria-label="View larger: ${esc(p.caps[l.k])} logo (${i+1} of ${real.length})"><span class="lgi${l.mono?" hasm":""}${l.hold?" hold":""}" style="--lw:${l.size}%;--nw:${w}px"><img class="col" src="${IMG[l.k]}" alt="${esc(alt(p,l.k))}" width="${w}" height="${DIM[l.k][1]}" loading="lazy" decoding="async">${l.mono?`<img class="mono" src="${IMG[l.mono]}" alt="" width="${DIM[l.mono][0]}" height="${DIM[l.mono][1]}" loading="lazy" decoding="async">`:""}</span></button></li>`}).join("")}</ul>
+   return `<li><button class="lgb" type="button" data-act="lb" data-p="${p.id}" data-k="${l.k}" aria-label="View larger: ${esc(p.caps[l.k])} logo (${i+1} of ${real.length})"><span class="lgi${l.mono?" hasm":""}${l.hold?" hold":""}${l.keep?" keep":""}" style="--lw:${l.size}%;--nw:${w}px"><img class="col" src="${IMG[l.k]}" alt="${esc(alt(p,l.k))}" width="${w}" height="${DIM[l.k][1]}" loading="lazy" decoding="async">${l.mono?`<img class="mono" src="${IMG[l.mono]}" alt="" width="${DIM[l.mono][0]}" height="${DIM[l.mono][1]}" loading="lazy" decoding="async">`:""}</span></button></li>`}).join("")}</ul>
   <div class="lintro"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><p class="lcount">9 selected logos</p></div></div></article>`}
  if(p.layout==="grids"){const gs=p.grids;
-  const items=gs.map((g,i)=>`<div class="it"><button class="fg" type="button" data-act="lb" data-p="${p.id}" data-k="${g.k}" aria-label="View larger: ${esc(alt(p,g.k))} (${i+1} of ${gs.length})">${img(p,g.k)}</button><p class="gcap">${esc(g.label)}${g.panels===false?"":"<span>3-post grid</span>"}</p></div>`);
-  return `<article class="project wide" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
-  ${p.stories?`<div><h4 class="bh">Instagram grids</h4>`:""}${slider({id:"sl-"+p.id,label:p.title+" grids",n:1,nt:1,nm:1,cls:"wide",items})}${p.stories?"</div>":""}</div>${p.stories?storiesSub(p):bsubs(p)}</article>`}
+  const items=gs.map((g,i)=>`<div class="it">${igw(p,g,`<button class="fg" type="button" data-act="lb" data-p="${p.id}" data-k="${g.k}" aria-label="View larger: ${esc(alt(p,g.k))} (${i+1} of ${gs.length})">${img(p,g.k)}</button>`)}<p class="gcap">${esc(g.label)}${g.panels===false?"":"<span>3-post grid</span>"}</p></div>`);
+  return `<article class="project wide" id="p-${p.id}" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
+  <div><h4 class="bh">Panoramic Instagram Grids</h4><p class="bhd">Connected compositions designed to span multiple Instagram posts and form one panoramic visual.</p>${slider({id:"sl-"+p.id,label:p.title+" panoramic Instagram grids",n:1,nt:1,nm:1,cls:"wide",items})}</div></div>${p.stories?storiesSub(p):bsubs(p)}</article>`}
  const keys=panelKeys(p);
  const secs=p.groups.map((g,gi)=>({g,gi})).filter(x=>x.g.panel!==false||x.g.sub);
- if(secs.length>1){const mk=(g,gi)=>g.keys.map((k,i)=>`<div class="it"><button class="fg" type="button" data-act="lbg" data-p="${p.id}" data-g="${gi}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${g.keys.length})">${img(p,k)}</button></div>`);
+ if(secs.length>1){const mk=(g,gi)=>g.keys.map((k,i)=>`<div class="it"><button class="fg${p.frame?` fr" style="--fr:${p.frame==="auto"?(DIM[k]||[4,5]).join("/"):p.frame}`:""}" type="button" data-act="lbg" data-p="${p.id}" data-g="${gi}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${g.keys.length})">${img(p,k)}</button></div>`);
   const [first,...rest]=secs;
-  return `<article class="project" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
+  return `<article class="project" id="p-${p.id}" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
   <div><h4 class="bh">${esc(first.g.label)}</h4>${slider({id:"sl-"+p.id,label:p.title+", "+first.g.label,n:p.n,nt:Math.min(p.n,2),nm:1,items:mk(first.g,first.gi)})}</div></div>${rest.map(x=>`<div class="bsub"><h4 class="bh">${esc(x.g.label)}</h4>${slider({id:"sl-"+p.id+"-g"+x.gi,label:p.title+", "+x.g.label,n:4,nt:3,nm:2,cls:"wide",items:mk(x.g,x.gi)})}</div>`).join("")}</article>`}
- const items=keys.length?keys.map((k,i)=>`<div class="it"><button class="fg" type="button" data-act="lb" data-p="${p.id}" data-k="${k}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${keys.length})">${img(p,k)}</button></div>`):emptyItems(p);
- return `<article class="project" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
- ${slider({id:"sl-"+p.id,label:p.title+" artwork",n:p.n,nt:Math.min(p.n,2),nm:1,items})}</div></article>`}
+ const items=keys.length?keys.map((k,i)=>`<div class="it"><button class="fg${p.frame?` fr" style="--fr:${p.frame==="auto"?(DIM[k]||[4,5]).join("/"):p.frame}`:""}" type="button" data-act="lb" data-p="${p.id}" data-k="${k}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${keys.length})">${img(p,k)}</button></div>`):emptyItems(p);
+ return `<article class="project" id="p-${p.id}" aria-labelledby="t-${p.id}"><div class="pgrid"><div class="pt"><span class="cat">${esc(p.cat)}</span><h3 id="t-${p.id}">${esc(p.title)}</h3><p>${esc(p.blurb)}</p><button class="btn" type="button" data-act="pd" data-p="${p.id}">View project details</button></div>
+ ${slider({id:"sl-"+p.id,label:p.title+" artwork",n:p.n,nt:Math.min(p.n,2),nm:1,cls:p.frame?"top":"",items})}</div></article>`}
 $("#projects").innerHTML=PROJECTS.map(projectHTML).join("");
 
 /* reels */
@@ -758,6 +798,50 @@ function initSliders(root=document){$$(".slider",root).forEach(sl=>{if(sl.datase
 initSliders();addEventListener("resize",()=>$$(".slider").forEach(upd));addEventListener("load",()=>$$(".slider").forEach(upd));
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>$$(".slider").forEach(upd));
 
+/* ---------- gentle automatic movement (progressive enhancement: galleries work fully without it) ---------- */
+(function(){try{
+ const AUTO=[],now=()=>performance.now(),hov=matchMedia("(hover:hover)");let seq=0;
+ const modalOpen=()=>pd.open||lb.open||vd.open||dk.open;
+ const live=(sl,v)=>{const c=$(".cnt",sl);if(c)c.setAttribute("aria-live",v)};
+ function advance(a){const {sl,t}=a,n=now();a.next=n+a.every;live(sl,"off");
+  if(t.scrollLeft+t.clientWidth>=t.scrollWidth-6){ /* end: dissolve out, return to the start while hidden, dissolve in (no visible rewind) */
+   a.loop=true;t.classList.add("lp");
+   setTimeout(()=>{a.busy=now()+400;t.scrollTo({left:0,behavior:"auto"});raf(()=>raf(()=>{t.classList.remove("lp");setTimeout(()=>{a.loop=false},400)}))},380);return}
+  a.busy=n+1200;t.scrollBy({left:stepOf(t),behavior:"smooth"})}
+ function tick(){const n=now();
+  if(document.hidden||modalOpen()||RM.matches){AUTO.forEach(a=>{a.next=Math.max(a.next,n+2500)});return}
+  for(const a of AUTO){if(!a.vis||a.user||a.loop||n<a.next)continue;const {sl,t}=a;
+   if(sl.classList.contains("few")||t.scrollWidth<=t.clientWidth+4){a.next=n+a.every;continue}
+   if((hov.matches&&sl.matches(":hover"))||sl.querySelector(":focus-visible")||a.drag||(a.hold&&n-a.holdAt<8000)){a.next=n+1500;continue}
+   advance(a)}}
+ function setup(sl){const t=$(".track",sl),info=$(".sinfo",sl);if(!t||!info||!$$(".it",t).length||$(".it.empty",t))return;
+  const idx=seq++,a={sl,t,every:4300+(idx%4)*250,next:now()+2600+((idx*790)%2400),vis:false,hold:false,holdAt:0,user:false,loop:false,busy:0,drag:false};AUTO.push(a);
+  const lab=sl.getAttribute("aria-label")||"gallery",b=document.createElement("button");b.type="button";b.className="pp";
+  const paint=()=>{b.dataset.s=a.user?"play":"pause";b.setAttribute("aria-label",(a.user?"Play automatic movement: ":"Pause automatic movement: ")+lab);b.title=a.user?"Play":"Pause"};
+  b.addEventListener("click",()=>{a.user=!a.user;a.next=now()+1500;paint()});paint();info.appendChild(b);
+  const bump=ms=>{a.next=Math.max(a.next,now()+ms);live(sl,"polite")};
+  sl.addEventListener("wheel",()=>bump(7000),{passive:true});sl.addEventListener("keydown",()=>bump(7000));
+  $$(".nb",sl).forEach(x=>x.addEventListener("click",()=>bump(8000)));
+  const hold=()=>{a.hold=true;a.holdAt=now();bump(7000)},rel=()=>{if(a.hold){a.hold=false;bump(6000)}};
+  t.addEventListener("touchstart",hold,{passive:true});t.addEventListener("touchend",rel,{passive:true});t.addEventListener("touchcancel",rel,{passive:true});
+  sl.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse")hold();else bump(7000)});addEventListener("pointerup",rel);addEventListener("pointercancel",rel);
+  t.addEventListener("scroll",()=>{if(now()>a.busy)bump(6000)},{passive:true});
+  /* mouse drag-to-scroll; a drag never counts as a click */
+  let d=null;t.addEventListener("dragstart",e=>e.preventDefault());
+  t.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button===0&&e.target.closest(".it"))d={x:e.clientX,l:t.scrollLeft,m:false,id:e.pointerId}});
+  addEventListener("pointermove",e=>{if(!d)return;const dx=e.clientX-d.x;if(!d.m&&Math.abs(dx)>6){d.m=true;a.drag=true;t.classList.add("dg");try{t.setPointerCapture(d.id)}catch(_){}}if(d.m)t.scrollLeft=d.l-dx});
+  const end=()=>{if(!d)return;const was=d.m;d=null;if(!was)return;
+   const stop=ev=>{ev.stopPropagation();ev.preventDefault()};t.addEventListener("click",stop,{capture:true,once:true});setTimeout(()=>t.removeEventListener("click",stop,true),60);
+   const tb=t.getBoundingClientRect().left,its=$$(".it",t);let best=0,bd=1e9;its.forEach((e,i)=>{const dd=Math.abs(e.getBoundingClientRect().left-tb-(parseFloat(getComputedStyle(t).paddingLeft)||0));if(dd<bd){bd=dd;best=i}});
+   const target=its[best].getBoundingClientRect().left-tb+t.scrollLeft-(parseFloat(getComputedStyle(t).paddingLeft)||0);
+   t.classList.remove("dg");a.drag=false;a.busy=now()+900;t.scrollTo({left:target,behavior:"smooth"});bump(6000)};
+  addEventListener("pointerup",end);addEventListener("pointercancel",end);
+  if("IntersectionObserver"in window)new IntersectionObserver(es=>es.forEach(e=>{a.vis=e.isIntersecting&&e.intersectionRatio>=.3}),{threshold:[0,.3,.6]}).observe(sl)}
+ $$(".slider").forEach(setup);
+ if(AUTO.length&&"IntersectionObserver"in window)setInterval(tick,300);
+ document.addEventListener("visibilitychange",()=>{const n=now();AUTO.forEach(a=>{a.next=Math.max(a.next,n+2500)})});
+}catch(err){console.warn("auto-advance disabled",err)}})();
+
 /* ---------- dialogs ---------- */
 const pd=$("#pd"),lb=$("#lb");let lastTrigger=null,lbTrigger=null,lbSet=[],lbIdx=0;
 const lockOn=()=>document.documentElement.classList.add("lock");
@@ -765,10 +849,10 @@ const vd=$("#vd"),dk=$("#dk");const lockOff=()=>{if(!pd.open&&!lb.open&&!vd.open
 function openProject(id,trigger){const p=PROJECTS.find(x=>x.id===id);if(!p)return;lastTrigger=trigger||document.activeElement;const f=tpl(p);
  const fact=(k,v,todo)=>`<div><dt>${k}</dt><dd${todo?' class="todo"':""}>${esc(v)}</dd></div>`,td=v=>/^\[Edit/.test(v);
  const pan=(g,gi,cls)=>[1,2,3].map(n=>{const k=g.k+"p"+n;return `<button class="fg" type="button" data-act="lbk" data-p="${p.id}" data-keys="${[1,2,3].map(m=>g.k+"p"+m).join(",")}" data-i="${n-1}" aria-label="View larger: ${esc(alt(p,k))}">${img(p,k)}</button>`}).join("");
- const groupsWide=p.layout==="grids"?`<section class="grp" aria-labelledby="g-0"><h3 id="g-0">${esc(p.groups[0].label)}<small>${p.grids.length} grids</small></h3>${p.grids.map((g,gi)=>`<div class="gb"><h4 class="gl">${esc(g.label)}${g.panels===false?"":"<span>3-post grid</span>"}</h4><button class="fg full" type="button" data-act="lbg" data-p="${p.id}" data-g="0" data-i="${gi}" aria-label="View larger: ${esc(alt(p,g.k))} (${gi+1} of ${p.grids.length})">${img(p,g.k)}</button>${gi===0&&g.panels!==false?`<div class="dk-only"><h4 class="gl sub">Individual posts from the ${esc(g.label)} grid</h4><div class="pcols">${pan(g,gi)}</div></div>`:""}${g.panels===false?"":`<details class="gp mo-only"><summary>View individual posts<span> (${esc(g.label)})</span></summary><div class="pcols">${pan(g,gi)}</div></details>`}</div>`).join("")}</section>
+ const groupsWide=p.layout==="grids"?`<section class="grp" aria-labelledby="g-0"><h3 id="g-0">${esc(p.groups[0].label)}<small>${p.grids.length} grids</small></h3><p class="bhd">Connected compositions designed to span multiple Instagram posts and form one panoramic visual.</p>${p.grids.map((g,gi)=>`<div class="gb"><h4 class="gl">${esc(g.label)}${g.panels===false?"":"<span>3-post grid</span>"}</h4>${igw(p,g,`<button class="fg full" type="button" data-act="lbg" data-p="${p.id}" data-g="0" data-i="${gi}" aria-label="View larger: ${esc(alt(p,g.k))} (${gi+1} of ${p.grids.length})">${img(p,g.k)}</button>`)}${gi===0&&g.panels!==false?`<div class="dk-only"><h4 class="gl sub">Individual posts from the ${esc(g.label)} grid</h4><div class="pcols">${pan(g,gi)}</div></div>`:""}${g.panels===false?"":`<details class="gp mo-only"><summary>View individual posts<span> (${esc(g.label)})</span></summary><div class="pcols">${pan(g,gi)}</div></details>`}</div>`).join("")}</section>
  <section class="grp" aria-labelledby="g-1"><h3 id="g-1">${p.stories?esc(p.groups[1].label):"Selected product ads"}<small>${p.groups[1].keys.length} images</small></h3><div class="cgrid ${p.stories?"":"m1"}" style="--cols:${p.stories?3:2}">${p.groups[1].keys.map((k,i)=>`<button class="fg" type="button" data-act="lbg" data-p="${p.id}" data-g="1" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${p.groups[1].keys.length})">${img(p,k)}</button>`).join("")}</div></section>`:"";
  const campsHTML=p.layout==="grids"&&p.campaigns?`<section class="grp" aria-labelledby="g-2"><h3 id="g-2">Carousel campaigns<small>${p.campaigns.length} campaigns</small></h3>${p.campaigns.map(c=>`<div class="gb"><h4 class="gl">${esc(c.title)}<span>Instagram carousel, ${c.slides.length} ${c.slides.length===1?"slide":"slides"}</span></h4>${c.slides.length?`<div class="cgrid m1" style="--cols:2">${c.slides.map((k,i)=>`<figure class="sf"><button class="fg" type="button" data-act="lbk" data-p="${p.id}" data-keys="${c.slides.join(",")}" data-i="${i}" aria-label="View larger: ${esc(c.title)}, slide ${i+1} of ${c.slides.length}">${img(p,k)}</button><figcaption class="sn">Slide ${i+1}</figcaption></figure>`).join("")}</div>`:`<div class="empty-note">Development placeholder: add this campaign's slide files.</div>`}</div>`).join("")}</section>`:"";
- const groups=p.layout==="grids"?groupsWide+campsHTML:p.groups.length?p.groups.map((g,gi)=>`<section class="grp" aria-labelledby="g-${gi}"><h3 id="g-${gi}">${esc(g.label)}<small>${g.keys.length} ${g.keys.length===1?"image":"images"}</small></h3><div class="cgrid${(g.cols||2)===1?" one":""}" style="--cols:${g.cols||2}">${g.keys.map((k,i)=>`<button class="fg" type="button" data-act="lbg" data-p="${p.id}" data-g="${gi}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${g.keys.length})">${img(p,k)}</button>`).join("")}</div></section>`).join(""):`<section class="grp"><h3>Artwork</h3><div class="cgrid" style="--cols:3">${[1,2,3].map(i=>`<div class="empty">${esc(p.title)}<br>image slot ${i}</div>`).join("")}</div></section>`;
+ const groups=p.layout==="grids"?groupsWide+campsHTML:p.groups.length?p.groups.map((g,gi)=>`<section class="grp" aria-labelledby="g-${gi}"><h3 id="g-${gi}">${esc(g.label)}<small>${g.keys.length} ${g.keys.length===1?"image":"images"}</small></h3><div class="cgrid${(g.cols||2)===1?" one":""}" style="--cols:${g.cols||2}">${g.keys.map((k,i)=>`<button class="fg${p.frame?` fr" style="--fr:${p.frame==="auto"?(DIM[k]||[4,5]).join("/"):p.frame}`:""}" type="button" data-act="lbg" data-p="${p.id}" data-g="${gi}" data-i="${i}" aria-label="View larger: ${esc(alt(p,k))} (${i+1} of ${g.keys.length})">${img(p,k)}</button>`).join("")}</div></section>`).join(""):`<section class="grp"><h3>Artwork</h3><div class="cgrid" style="--cols:3">${[1,2,3].map(i=>`<div class="empty">${esc(p.title)}<br>image slot ${i}</div>`).join("")}</div></section>`;
  $("#cs").innerHTML=`<div class="cs-top"><span class="cat" style="margin:0">${esc(p.cat)}</span><button class="btn" type="button" id="x">Close</button></div>
  <h2 id="cs-title">${esc(p.title)}</h2><p class="lead">${esc(p.blurb)}</p>
  <dl class="facts">${fact("Client",p.client)}${fact("Deliverables",p.deliverables)}${fact("My role",f.role,td(f.role))}${p.cs?"":fact("Agency and collaborator credits",f.credits,td(f.credits))}${fact("Brief",f.brief,td(f.brief))}${fact("Creative direction",f.direction,td(f.direction))}${fact(p.cs?"Design output":"Outcome",f.outcome,td(f.outcome))}</dl>${groups}`;
@@ -871,9 +955,9 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(
 const mb=$("#menubtn"),menu=$("#menu"),bar=$("#bar");
 const setMenu=o=>{menu.classList.toggle("open",o);mb.setAttribute("aria-expanded",String(o));mb.textContent=o?"Close":"Menu"};
 mb.addEventListener("click",()=>{const o=!menu.classList.contains("open");setMenu(o);if(o)$("a",menu).focus()});
-function focusDest(hash){const t=hash==="#top"?$("#home"):document.querySelector(hash);if(!t)return;const h=t.matches("h1,h2,h3")?t:(t.querySelector("h1,h2")||t);
+function focusDest(hash){const t=hash==="#top"?$("#home"):document.querySelector(hash);if(!t)return;const h=t.matches("h1,h2,h3")?t:(t.querySelector("h1,h2,h3")||t);
  if(!h.hasAttribute("tabindex"))h.setAttribute("tabindex","-1");setTimeout(()=>h.focus({preventScroll:true}),0)}
-bar.addEventListener("click",e=>{const a=e.target.closest("a");if(!a||!bar.contains(a))return;const href=a.getAttribute("href")||"";
+document.addEventListener("click",e=>{const a=e.target.closest("a");if(!a||!(bar.contains(a)||a.closest("#home")))return;const href=a.getAttribute("href")||"";
  if(menu.contains(a))setMenu(false);
  if(href.length>1&&href[0]==="#")focusDest(href)});
 bar.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.classList.contains("open")){setMenu(false);mb.focus()}});
@@ -881,31 +965,15 @@ bar.addEventListener("focusout",e=>{if(menu.classList.contains("open")&&!bar.con
 document.addEventListener("click",e=>{if(menu.classList.contains("open")&&!e.target.closest(".bar"))setMenu(false)});
 matchMedia("(min-width:761px)").addEventListener("change",()=>setMenu(false));
 
-/* [section id, nav item it belongs to]; sorted into real document order so reordering sections never breaks highlighting */
-const SECS=[["home","home"],["work","work"],["reels","work"],["about","about"],["experience","experience"],["services","services"],["testimonials","services"],["contact","contact"]]
- .filter(([id])=>document.getElementById(id)).sort((a,b)=>document.getElementById(a[0]).compareDocumentPosition(document.getElementById(b[0]))&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
-const navs=$$("[data-s]");let sp=0;
-function spy(){sp=0;let cur="home";const y=innerHeight*.35;for(const [id,k] of SECS){const e=document.getElementById(id);if(e&&e.getBoundingClientRect().top<=y)cur=k}
- if(innerHeight+scrollY>=document.documentElement.scrollHeight-6)cur="contact";
- navs.forEach(a=>a.setAttribute("aria-current",String(a.dataset.s===cur)))}
-addEventListener("scroll",()=>{if(!sp)sp=raf(spy)},{passive:true});addEventListener("resize",spy);spy();
 
-/* ---------- contact form ---------- */
-const form=$("#form"),fs=$("#fstatus"),fb=$("#fbtn"),loadedAt=Date.now();let sending=false;
-const say=(m,c)=>{fs.textContent=m;fs.className="note"+(c?" "+c:"");fs.setAttribute("role",c==="err"?"alert":"status")};
-form.addEventListener("submit",async e=>{e.preventDefault();if(sending)return;
- const f=form.elements;[...form.elements].forEach(x=>x.removeAttribute&&x.removeAttribute("aria-invalid"));
- const name=f.name.value.trim(),email=f.email.value.trim(),msg=f.message.value.trim();
- const bad=!name?f.name:!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)?f.email:msg.length<10?f.message:null;
- if(bad){bad.setAttribute("aria-invalid","true");say(bad===f.name?"Please enter your name.":bad===f.email?"Please enter a valid email address.":"Please write at least a short description of the project (10 characters or more).","err");bad.focus();return}
- if(f._honey.value||Date.now()-loadedAt<2500){say("Thank you. Your message was sent.","ok");return} /* bots: silently pretend success, send nothing */
- sending=true;fb.disabled=true;fb.setAttribute("aria-busy","true");$("span",fb).textContent="Sending...";say("Sending your message...");
- try{const r=await fetch(FORM_ENDPOINT,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
-  let j=null;try{j=await r.json()}catch(_){}
-  if(!r.ok||!j||!(j.success===true||j.success==="true")){console.warn("Form not delivered:",r.status,j&&j.message);throw new Error(r.status)}
-  form.reset();say("Thank you. Your message was sent, and I will reply by email.","ok")}
- catch(err){say(navigator.onLine===false?"You appear to be offline. Your message is still in the form, so you can send it when you are back online.":"Sorry, your message could not be sent. Your text is still here, so you can try again, or email me at sobhazadm@gmail.com.","err")}
- finally{sending=false;fb.disabled=false;fb.removeAttribute("aria-busy");$("span",fb).textContent="Send inquiry"}});
+/* ---------- copy email ---------- */
+{const btn=$("#copymail"),out=$("#copied"),addr=$("#mailtxt").textContent.trim();let to=0;
+ const say=m=>{out.textContent=m;clearTimeout(to);to=setTimeout(()=>{out.textContent=""},2600)};
+ btn.addEventListener("click",async()=>{let ok=false;
+  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(addr);ok=true}}catch(_){}
+  if(!ok){try{const r=document.createRange();r.selectNodeContents($("#mailtxt"));const s=getSelection();s.removeAllRanges();s.addRange(r);ok=document.execCommand("copy");s.removeAllRanges()}catch(_){}}
+  say(ok?"Email address copied.":"Copy was blocked. The address above is selected, so you can copy it manually.");
+  if(!ok){const r=document.createRange();r.selectNodeContents($("#mailtxt"));const s=getSelection();s.removeAllRanges();s.addRange(r)}})}
 
 /* ---------- scroll reveal (IntersectionObserver; content stays visible if anything here fails) ---------- */
 (()=>{const marked=[];try{
